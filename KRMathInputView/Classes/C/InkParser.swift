@@ -9,10 +9,7 @@
 import Foundation
 
 public protocol MathInkParserDelegate: class {
-    func parser(_ parser: MathInkParser,
-                didParseTreeTo latexString: UnsafeMutablePointer<Character>,
-                node: UnsafeMutablePointer<NSArray>)
-    
+    func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, tree: NSArray)
     func parser(_ parser: MathInkParser, didFailWith error: NSError)
 }
 

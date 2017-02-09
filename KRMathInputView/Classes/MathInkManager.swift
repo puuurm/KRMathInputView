@@ -9,11 +9,11 @@
 import UIKit
 
 public protocol MathInkManagerDelegate: class {
-    func manager(_ manager: MathInkManager, didParseTreeTo latexString: String)
+    func manager(_ manager: MathInkManager, didParseTreeToLaTex string: String)
     func manager(_ manager: MathInkManager, didFailToParseWith error: NSError)
 }
 
-public class MathInkManager {
+public class MathInkManager: MathInkParserDelegate {
     
     public static func getInkManagerForTest() -> MathInkManager{
         return MathInkManager()
@@ -169,6 +169,23 @@ public class MathInkManager {
         guard let index = indexOfSelectedNode else { return nil }
         
         return Node(ink: nodeStrokes[index], frame: nodeFrames[index])
+    }
+    
+    // MARK: - MathInkParser delegate
+
+    public func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, tree: NSArray) {
+        guard let tree = tree as? [TerminalNodeType] else {
+            // TODO: Define error
+//            delegate?.manager(self, didFailToParseWith: <#T##NSError#>)
+            return
+        }
+        
+        nodes = tree
+        delegate?.manager(self, didParseTreeToLaTex: String(string))
+    }
+    
+    public func parser(_ parser: MathInkParser, didFailWith error: NSError) {
+        delegate?.manager(self, didFailToParseWith: error)
     }
 }
 

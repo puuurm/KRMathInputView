@@ -22,8 +22,8 @@ typedef struct _ByteCandidates {
 } ByteCandidates;
 
 typedef struct _ByteNode {
-    ByteArrayIndexes   indexes;
-    ByteCandidates candidates;
+    ByteArrayIndexes indexes;
+    ByteCandidates   candidates;
 } ByteNode;
 
 #endif /* MyScriptNode_h */

@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 @objc public protocol MathInputViewDelegate: NSObjectProtocol {
     func mathInputView(_ MathInputView: MathInputView, didParse ink: [Any], latex: String)
     func mathInputView(_ MathInputView: MathInputView, didFailToParse ink: [Any], with error: NSError)
@@ -139,8 +138,8 @@ open class MathInputView: UIView, MathInkManagerDelegate {
     
     // MARK: - MyScriptParser delegate
     
-    public func manager(_ manager: MathInkManager, didParseTreeTo latexString: String) {
-        delegate?.mathInputView(self, didParse: manager.ink, latex: latexString)
+    public func manager(_ manager: MathInkManager, didParseTreeToLaTex string: String) {
+        delegate?.mathInputView(self, didParse: manager.ink, latex: string)
     }
     
     public func manager(_ manager: MathInkManager, didFailToParseWith error: NSError) {
