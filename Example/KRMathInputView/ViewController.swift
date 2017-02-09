@@ -22,7 +22,7 @@ class MyScriptView: MathInputView {
 class ViewController: UIViewController, MathInputViewDelegate {
 
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var mathInputView: MathInputView!
+    @IBOutlet weak var mathInputView: MyScriptView!
     
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var redoButton: UIButton!
@@ -30,7 +30,12 @@ class ViewController: UIViewController, MathInputViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mathInputView.delegate = self
+        mathInputView.undoButton?.isEnabled = false
+        mathInputView.undoButton?.alpha = 0.7
+        
+        mathInputView.redoButton?.isEnabled = false
+        mathInputView.redoButton?.alpha = 0.7
+        
         // FIXME: Set parser
 //        mathInputView.manager.parser =
     }
