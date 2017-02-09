@@ -128,11 +128,11 @@ open class MathInputView: UIView, MathInkManagerDelegate {
         showCursor(at: node.frame)
     }
     
-    @IBAction public func undoAction(_ sender: UIButton) {
+    @IBAction public func undoAction(_ sender: UIButton?) {
         if let rect = manager.undo() { setNeedsDisplay(rect) }
     }
     
-    @IBAction public func redoAction(_ sender: UIButton) {
+    @IBAction public func redoAction(_ sender: UIButton?) {
         if let rect = manager.redo() { setNeedsDisplay(rect) }
     }
     

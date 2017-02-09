@@ -16,7 +16,7 @@ import Foundation
 @objc public protocol MathInkParser {
     weak var delegate: MathInkParserDelegate? { get set }
     
-    func addInk(_ strokes: Any)
+    func addInk(_ strokes: NSArray)
     func parse()
 }
 

@@ -13,7 +13,7 @@ public protocol MathInkManagerDelegate: class {
     func manager(_ manager: MathInkManager, didFailToParseWith error: NSError)
 }
 
-public class MathInkManager: MathInkParserDelegate {
+public class MathInkManager: NSObject, MathInkParserDelegate {
     
     public static func getInkManagerForTest() -> MathInkManager{
         return MathInkManager()
@@ -35,7 +35,9 @@ public class MathInkManager: MathInkParserDelegate {
     private var inkIndex = 0
     private var inkCache = [InkType]()
     
-    public var parser: MathInkParser?
+    public var parser: MathInkParser? {
+        didSet { parser?.delegate = self }
+    }
     
     public private(set) var nodes = [TerminalNodeType]()
     public private(set) var indexOfSelectedNode: Int?
@@ -126,10 +128,7 @@ public class MathInkManager: MathInkParserDelegate {
             return
         }
         
-        var string: NSString? = nil
-        var arrNodes: NSArray?
-        
-        parser.addInk(ink.map { $0.objcType })
+        parser.addInk(NSArray(array: ink.map { $0.objcType }))
         parser.parse()
     }
     
