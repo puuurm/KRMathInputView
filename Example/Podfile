@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'KRMathInputView_Example' do
+  pod 'KRMathInputView', :path => '../'
+
+  target 'KRMathInputView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
