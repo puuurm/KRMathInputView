@@ -14,7 +14,7 @@ import UIKit
 }
 
 open class MathInputView: UIView, MathInkManagerDelegate {
-    public weak var delegate: MathInputViewDelegate?
+    open weak var delegate: MathInputViewDelegate?
     
     public var isWritingMode: Bool = true {
         willSet {
@@ -23,7 +23,10 @@ open class MathInputView: UIView, MathInkManagerDelegate {
         }
     }
     
-    public var manager = MathInkManager()
+    open var manager = MathInkManager()
+    
+    @IBOutlet open weak var undoButton: UIButton?
+    @IBOutlet open weak var redoButton: UIButton?
     
     private let tapGestureRecognizer = UITapGestureRecognizer()
     private let longPressGestureRecognizer = UILongPressGestureRecognizer()
@@ -138,12 +141,15 @@ open class MathInputView: UIView, MathInkManagerDelegate {
     
     // MARK: - MyScriptParser delegate
     
-    public func manager(_ manager: MathInkManager, didParseTreeToLaTex string: String) {
+    open func manager(_ manager: MathInkManager, didParseTreeToLaTex string: String) {
         delegate?.mathInputView(self, didParse: manager.ink, latex: string)
     }
     
-    public func manager(_ manager: MathInkManager, didFailToParseWith error: NSError) {
+    open func manager(_ manager: MathInkManager, didFailToParseWith error: NSError) {
         delegate?.mathInputView(self, didFailToParse: manager.ink, with: error)
     }
     
+    open func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool)) {
+        
+    }
 }

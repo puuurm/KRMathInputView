@@ -28,7 +28,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sxq-X4-Qrh" customClass="MathInputView" customModule="KRMathInputView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sxq-X4-Qrh" customClass="MyScriptView" customModule="KRMathInputView_Example" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="512" width="768" height="512"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDf-My-l5X">
@@ -39,7 +39,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="redoAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="qzz-UM-YAV"/>
+                                            <action selector="redoAction:" destination="sxq-X4-Qrh" eventType="touchUpInside" id="Vuq-qU-dtW"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HlN-eO-UQ2">
@@ -50,11 +50,15 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="undoAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="4yl-5s-HD6"/>
+                                            <action selector="undoAction:" destination="sxq-X4-Qrh" eventType="touchUpInside" id="Guu-oy-GnO"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="redoButton" destination="dDf-My-l5X" id="bZK-zF-sDU"/>
+                                    <outlet property="undoButton" destination="HlN-eO-UQ2" id="IMo-XD-64Y"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

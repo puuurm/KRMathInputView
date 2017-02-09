@@ -11,6 +11,7 @@ import UIKit
 public protocol MathInkManagerDelegate: class {
     func manager(_ manager: MathInkManager, didParseTreeToLaTex string: String)
     func manager(_ manager: MathInkManager, didFailToParseWith error: NSError)
+    func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool))
 }
 
 public class MathInkManager: NSObject, MathInkParserDelegate {
@@ -85,6 +86,8 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
             buffer = nil
         }
         
+        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        
         return { () -> CGRect in
             let minX = min(point.x, bufferPoint.x) - lineWidth * 2.0
             let maxX = max(point.x, bufferPoint.x) + lineWidth * 4.0
@@ -98,6 +101,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
     func undo() -> CGRect? {
         guard canUndo else { return nil }
         inkIndex -= 1
+        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         return { () -> CGRect in
             var frame = inkCache[inkIndex].frame
             frame.origin.x -= lineWidth * 2.0
@@ -111,6 +115,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
     func redo() -> CGRect? {
         guard canRedo else { return nil }
         inkIndex += 1
+        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         return { () -> CGRect in
             var frame = inkCache[inkIndex - 1].frame
             frame.origin.x -= lineWidth * 2.0

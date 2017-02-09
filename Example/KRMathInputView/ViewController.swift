@@ -9,6 +9,16 @@
 import UIKit
 import KRMathInputView
 
+class MyScriptView: MathInputView {
+    override func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool)) {
+        undoButton?.isEnabled = state.undo
+        undoButton?.alpha = state.undo ? 1.0 : 0.7
+        
+        redoButton?.isEnabled = state.redo
+        redoButton?.alpha = state.redo ? 1.0 : 0.7
+    }
+}
+
 class ViewController: UIViewController, MathInputViewDelegate {
 
     @IBOutlet weak var label: UILabel!
@@ -30,14 +40,6 @@ class ViewController: UIViewController, MathInputViewDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func undoAction(_ sender: UIButton) {
-        mathInputView.undoAction(sender)
-    }
-    
-    @IBAction func redoAction(_ sender: UIButton) {
-        mathInputView.redoAction(sender)
-    }
-    
     // MARK: - MathInputView delegate
     
     func mathInputView(_ MathInputView: MathInputView, didParse ink: [Any], latex: String) {
