@@ -8,13 +8,13 @@
 
 import Foundation
 
-public protocol MathInkParserDelegate: class {
+@objc public protocol MathInkParserDelegate: NSObjectProtocol {
     func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, tree: NSArray)
     func parser(_ parser: MathInkParser, didFailWith error: NSError)
 }
 
-public protocol MathInkParser {
-    var delegate: MathInkParserDelegate { get set }
+@objc public protocol MathInkParser {
+    weak var delegate: MathInkParserDelegate? { get set }
     
     func addInk(_ strokes: Any)
     func parse()
