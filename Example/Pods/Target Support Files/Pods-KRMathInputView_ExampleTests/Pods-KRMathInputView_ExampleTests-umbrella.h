@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_KRMathInputView_TestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_KRMathInputView_TestsVersionString[];
+FOUNDATION_EXPORT double Pods_KRMathInputView_ExampleTestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_KRMathInputView_ExampleTestsVersionString[];
 

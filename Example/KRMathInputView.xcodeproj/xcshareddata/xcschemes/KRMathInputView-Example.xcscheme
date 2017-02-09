@@ -52,6 +52,16 @@
                ReferencedContainer = "container:KRMathInputView.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "036648601E4C024E009BDE27"
+               BuildableName = "KRMathInputView_ExampleTests.xctest"
+               BlueprintName = "KRMathInputView_ExampleTests"
+               ReferencedContainer = "container:KRMathInputView.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
