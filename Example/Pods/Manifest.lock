@@ -1,0 +1,16 @@
+PODS:
+  - KRMathInputView (0.1.0)
+
+DEPENDENCIES:
+  - KRMathInputView (from `../`)
+
+EXTERNAL SOURCES:
+  KRMathInputView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  KRMathInputView: 0bd680c4d51549633948f347d00f6df0bd5cce95
+
+PODFILE CHECKSUM: a55d28ff1d70ac6d975a6e365c1ca4a4b6949083
+
+COCOAPODS: 1.2.0
