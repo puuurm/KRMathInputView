@@ -9,16 +9,11 @@
 Pod::Spec.new do |s|
   s.name             = 'KRMathInputView'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of KRMathInputView.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.summary          = 'A generic input view for math handwriting.'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  `KRMathInputView` receives handwriting input and saves data as paths.
+  By separating the parser that analyzes input data, `KRMathInputView` can be easily adopted into an existing project.
                        DESC
 
   s.homepage         = 'https://github.com/BridgeTheGap/KRMathInputView'

@@ -22,7 +22,7 @@ pod "KRMathInputView"
 
 ## Author
 
-BridgeTheGap, joshuaparkwm@gmail.com
+Woomin Park, wmpark@knowre.com
 
 ## License
 
