@@ -10,6 +10,7 @@
 #endif
 #endif
 
+
 FOUNDATION_EXPORT double KRMathInputViewVersionNumber;
 FOUNDATION_EXPORT const unsigned char KRMathInputViewVersionString[];
 

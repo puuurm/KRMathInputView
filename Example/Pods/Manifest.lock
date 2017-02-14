@@ -2,15 +2,20 @@ PODS:
   - KRMathInputView (0.1.0)
 
 DEPENDENCIES:
-  - KRMathInputView (from `../`)
+  - KRMathInputView (from `https://github.com/BridgeTheGap/KRMathInputView.git`)
 
 EXTERNAL SOURCES:
   KRMathInputView:
-    :path: "../"
+    :git: https://github.com/BridgeTheGap/KRMathInputView.git
+
+CHECKOUT OPTIONS:
+  KRMathInputView:
+    :commit: e65a290f8ad1a962b606317283bc6747237f8e0a
+    :git: https://github.com/BridgeTheGap/KRMathInputView.git
 
 SPEC CHECKSUMS:
   KRMathInputView: 0bd680c4d51549633948f347d00f6df0bd5cce95
 
-PODFILE CHECKSUM: ed6d6e8a523c443513a0225646946fa4ad9d16bd
+PODFILE CHECKSUM: 8e766b4365031b7e58b6155d2af415c0d50dee0b
 
 COCOAPODS: 1.2.0
