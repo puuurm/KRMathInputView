@@ -9,7 +9,7 @@
 import Foundation
 
 @objc public protocol MathInkParserDelegate: NSObjectProtocol {
-    func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, tree: NSArray)
+    func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, leafNodes: NSArray)
     func parser(_ parser: MathInkParser, didFailWith error: NSError)
 }
 

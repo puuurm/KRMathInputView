@@ -10,8 +10,6 @@
 #endif
 #endif
 
-#import "ByteNode.h"
-
 FOUNDATION_EXPORT double KRMathInputViewVersionNumber;
 FOUNDATION_EXPORT const unsigned char KRMathInputViewVersionString[];
 

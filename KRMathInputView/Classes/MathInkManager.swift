@@ -177,14 +177,15 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - MathInkParser delegate
 
-    public func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, tree: NSArray) {
-        guard let tree = tree as? [TerminalNodeType] else {
+    public func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, leafNodes: NSArray) {
+        guard let leafNodes = leafNodes as? [TerminalNodeType] else {
             // TODO: Define error
 //            delegate?.manager(self, didFailToParseWith: <#T##NSError#>)
             return
         }
         
-        nodes = tree
+        // TODO: Set leaf nodes and undefined rule nodes
+//        nodes = leafNodes
         delegate?.manager(self, didParseTreeToLaTex: String(string))
     }
     

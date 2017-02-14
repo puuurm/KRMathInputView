@@ -10,50 +10,31 @@ import UIKit
 
 public protocol TerminalNodeType {
     var indexes: [Int] { get }
-    var candidates: [Character] { get }
+    var candidates: [String] { get }
 }
 
-fileprivate extension ByteNode {
-    var indexesArray: [Int] {
-        let count = indexes.byteCount / MemoryLayout<Int>.stride
-        let buffer = indexes.bytes.withMemoryRebound(to: Int.self, capacity: count) {
-            UnsafeBufferPointer(start: $0, count: count)
-        }
-        return Array(buffer)
-    }
-    
-    var candidatesArray: [Character] {
-        let count = candidates.byteCount / MemoryLayout<Character>.stride
-        let buffer = candidates.bytes.withMemoryRebound(to: Character.self, capacity: count) {
-            UnsafeBufferPointer(start: $0, count: count)
-        }
-        
-        return Array(buffer)
-    }
-}
-
-public struct InkNode: TerminalNodeType {
+@objc public class InkNode: NSObject, TerminalNodeType {
     public let indexes: [Int]
-    public let candidates: [Character]
+    public let candidates: [String]
     
-    public init(byteNode: ByteNode) {
-        (indexes, candidates) = (byteNode.indexesArray, byteNode.candidatesArray)
+    override public var description: String {
+        return "<InkNode: stroke indexes=\(indexes); candidates=\(candidates)>"
     }
     
-    public init(indexes: [Int], candidates: [Character]) {
+    public init(indexes: [Int], candidates: [String]) {
         (self.indexes, self.candidates) = (indexes, candidates)
     }
 }
 
-public struct CharacterNode: TerminalNodeType {
+@objc public class CharacterNode: NSObject, TerminalNodeType {
     public let indexes: [Int]
-    public let candidates: [Character]
+    public let candidates: [String]
     
-    public init(byteNode: ByteNode) {
-        (indexes, candidates) = (byteNode.indexesArray, byteNode.candidatesArray)
+    override public var description: String {
+        return "<CharacterNode: index=\(indexes[0]); character=\(candidates[0])>"
     }
     
-    public init(indexes: [Int], candidates: [Character]) {
+    public init(indexes: [Int], candidates: [String]) {
         (self.indexes, self.candidates) = (indexes, candidates)
     }
 }
