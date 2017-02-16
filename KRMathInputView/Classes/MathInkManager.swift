@@ -14,56 +14,57 @@ public protocol MathInkManagerDelegate: class {
     func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool))
 }
 
-public class MathInkManager: NSObject, MathInkParserDelegate {
+open class MathInkManager: NSObject, MathInkParserDelegate {
     
-    public static func getInkManagerForTest() -> MathInkManager{
+    open static func getInkManagerForTest() -> MathInkManager{
         return MathInkManager()
     }
     
-    public weak var delegate: MathInkManagerDelegate?
+    open weak var delegate: MathInkManagerDelegate?
     
-    public var lineWidth: CGFloat = 3.0
+    open var lineWidth: CGFloat = 3.0
     
     private(set) var buffer: UIBezierPath?
     
-    public var ink: [InkType] {
+    open var ink: [InkType] {
         return Array(inkCache.dropLast(inkCache.count - inkIndex))
     }
     
-    public var canUndo: Bool { return inkIndex > 0  }
-    public var canRedo: Bool { return inkIndex < inkCache.count }
+    open var canUndo: Bool { return inkIndex > 0  }
+    open var canRedo: Bool { return inkIndex < inkCache.count }
     
     private var inkIndex = 0
     private var inkCache = [InkType]()
     
-    public var parser: MathInkParser? {
+    open var parser: MathInkParser? {
         didSet { parser?.delegate = self }
     }
     
-    public private(set) var nodes = [TerminalNodeType]()
-    public private(set) var indexOfSelectedNode: Int?
+    open private(set) var nodes = [TerminalNodeType]()
+    open private(set) var indexOfSelectedNode: Int?
     
     // MARK: - Test
     
-    public func test(with ink: [InkType], nodes: [TerminalNodeType]) {
+    internal func test(with ink: [InkType], nodes: [TerminalNodeType]) {
         self.inkCache = ink
         self.nodes = nodes
     }
     
-    public func testSelectNode(at point: CGPoint) -> Node? {
+    internal func testSelectNode(at point: CGPoint) -> Node? {
         return selectNode(at: point)
     }
     
     // MARK: - Ink
     
-    func addInkFromBuffer() {
+    internal func addInkFromBuffer() {
         if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
         
         inkCache.append(StrokeInk(path: buffer!))
         inkIndex += 1
     }
     
-    @discardableResult func inputStream(at point: CGPoint, previousPoint: CGPoint, isLast: Bool = false) -> CGRect {
+    @discardableResult
+    internal func inputStream(at point: CGPoint, previousPoint: CGPoint, isLast: Bool = false) -> CGRect {
         func midPoint() -> CGPoint {
             return CGPoint(x: (point.x + previousPoint.x) * 0.5,
                            y: (point.y + previousPoint.y) * 0.5)
@@ -98,7 +99,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
         }()
     }
     
-    func undo() -> CGRect? {
+    internal func undo() -> CGRect? {
         guard canUndo else { return nil }
         inkIndex -= 1
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
@@ -112,7 +113,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
         }()
     }
     
-    func redo() -> CGRect? {
+    internal func redo() -> CGRect? {
         guard canRedo else { return nil }
         inkIndex += 1
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
@@ -126,7 +127,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
             }()
     }
     
-    func process() {
+    internal func process() {
         guard let parser = parser else {
             // TODO: Define error
             delegate?.manager(self, didFailToParseWith: NSError(domain: "tempdomain", code: 0))
@@ -137,7 +138,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
         parser.parse()
     }
     
-    func selectNode(at point: CGPoint) -> Node? {
+    internal func selectNode(at point: CGPoint) -> Node? {
         var candidateIndexes = [Int]()
         var nodeStrokes = [[InkType]]()
         var nodeFrames = [CGRect]()
@@ -177,7 +178,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - MathInkParser delegate
 
-    public func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, leafNodes: NSArray) {
+    open func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, leafNodes: NSArray) {
         guard let leafNodes = leafNodes as? [TerminalNodeType] else {
             // TODO: Define error
 //            delegate?.manager(self, didFailToParseWith: <#T##NSError#>)
@@ -193,7 +194,7 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
         delegate?.manager(self, didParseTreeToLaTex: String(string))
     }
     
-    public func parser(_ parser: MathInkParser, didFailWith error: NSError) {
+    open func parser(_ parser: MathInkParser, didFailWith error: NSError) {
         delegate?.manager(self, didFailToParseWith: error)
     }
 }
