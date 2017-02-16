@@ -10,7 +10,7 @@ import XCTest
 import KRMathInputView
 
 class MathInkManagerTests: XCTestCase {
-    let manager = MathInkManager.getInkManagerForTest()
+    let manager = MathInkManager()
     
     override func setUp() {
         super.setUp()

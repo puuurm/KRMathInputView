@@ -1,7 +1,7 @@
 use_frameworks!
 
 target 'KRMathInputView_Example' do
-  pod 'KRMathInputView', :git => 'https://github.com/BridgeTheGap/KRMathInputView.git'
+  pod 'KRMathInputView', :path => '../'
     
     target 'KRMathInputView_ExampleTests' do
     inherit! :search_paths

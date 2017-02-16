@@ -20,18 +20,18 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return MathInkManager()
     }
     
-    open weak var delegate: MathInkManagerDelegate?
+    public weak var delegate: MathInkManagerDelegate?
     
-    open var lineWidth: CGFloat = 3.0
+    public var lineWidth: CGFloat = 3.0
     
-    private(set) var buffer: UIBezierPath?
+    public private(set) var buffer: UIBezierPath?
     
-    open var ink: [InkType] {
+    public var ink: [InkType] {
         return Array(inkCache.dropLast(inkCache.count - inkIndex))
     }
     
-    open var canUndo: Bool { return inkIndex > 0  }
-    open var canRedo: Bool { return inkIndex < inkCache.count }
+    public var canUndo: Bool { return inkIndex > 0  }
+    public var canRedo: Bool { return inkIndex < inkCache.count }
     
     private var inkIndex = 0
     private var inkCache = [InkType]()
