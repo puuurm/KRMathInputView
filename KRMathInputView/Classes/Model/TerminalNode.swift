@@ -31,7 +31,7 @@ public protocol TerminalNodeType {
     public let candidates: [String]
     
     override public var description: String {
-        return "<CharacterNode: index=\(indexes[0]); character=\(candidates[0])>"
+        return "<CharacterNode: index=\(indexes); character=\(candidates)>"
     }
     
     public init(indexes: [Int], candidates: [String]) {

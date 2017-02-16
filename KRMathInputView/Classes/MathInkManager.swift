@@ -184,6 +184,10 @@ public class MathInkManager: NSObject, MathInkParserDelegate {
             return
         }
         
+        // FIXME: ** TEST CODE **
+        print(leafNodes);
+        // **
+        
         // TODO: Set leaf nodes and undefined rule nodes
 //        nodes = leafNodes
         delegate?.manager(self, didParseTreeToLaTex: String(string))
