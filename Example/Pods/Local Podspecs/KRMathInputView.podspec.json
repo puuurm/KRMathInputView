@@ -1,15 +1,15 @@
 {
   "name": "KRMathInputView",
   "version": "0.1.0",
-  "summary": "A short description of KRMathInputView.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "A generic input view for math handwriting.",
+  "description": "`KRMathInputView` receives handwriting input and saves data as paths.\nBy separating the parser that analyzes input data, `KRMathInputView` can be easily adopted into an existing project.",
   "homepage": "https://github.com/BridgeTheGap/KRMathInputView",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "BridgeTheGap": "joshuaparkwm@gmail.com"
+    "Woomin Park": "wmpark@knowre.com"
   },
   "source": {
     "git": "https://github.com/BridgeTheGap/KRMathInputView.git",

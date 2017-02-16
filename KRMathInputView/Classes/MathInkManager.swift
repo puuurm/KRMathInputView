@@ -16,10 +16,6 @@ public protocol MathInkManagerDelegate: class {
 
 open class MathInkManager: NSObject, MathInkParserDelegate {
     
-    open static func getInkManagerForTest() -> MathInkManager{
-        return MathInkManager()
-    }
-    
     public weak var delegate: MathInkManagerDelegate?
     
     public var lineWidth: CGFloat = 3.0
@@ -40,17 +36,17 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         didSet { parser?.delegate = self }
     }
     
-    open private(set) var nodes = [TerminalNodeType]()
-    open private(set) var indexOfSelectedNode: Int?
+    public private(set) var nodes = [TerminalNodeType]()
+    public private(set) var indexOfSelectedNode: Int?
     
     // MARK: - Test
     
-    internal func test(with ink: [InkType], nodes: [TerminalNodeType]) {
+    public func test(with ink: [InkType], nodes: [TerminalNodeType]) {
         self.inkCache = ink
         self.nodes = nodes
     }
     
-    internal func testSelectNode(at point: CGPoint) -> Node? {
+    public func testSelectNode(at point: CGPoint) -> Node? {
         return selectNode(at: point)
     }
     
@@ -197,6 +193,5 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     open func parser(_ parser: MathInkParser, didFailWith error: NSError) {
         delegate?.manager(self, didFailToParseWith: error)
     }
+    
 }
-
-
