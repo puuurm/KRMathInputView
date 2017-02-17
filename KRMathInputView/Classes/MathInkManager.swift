@@ -99,6 +99,8 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard canUndo else { return nil }
         inkIndex -= 1
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        process()
+        
         return { () -> CGRect in
             var frame = inkCache[inkIndex].frame
             frame.origin.x -= lineWidth * 2.0
@@ -113,6 +115,8 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard canRedo else { return nil }
         inkIndex += 1
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        process()
+        
         return { () -> CGRect in
             var frame = inkCache[inkIndex - 1].frame
             frame.origin.x -= lineWidth * 2.0
@@ -175,18 +179,37 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     // MARK: - MathInkParser delegate
 
     open func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, leafNodes: NSArray) {
-        guard let leafNodes = leafNodes as? [TerminalNodeType] else {
+        guard var leafNodes = leafNodes as? [TerminalNodeType] else {
             // TODO: Define error
 //            delegate?.manager(self, didFailToParseWith: <#T##NSError#>)
             return
+        }
+        
+        // Get undefined stroke indexes
+        var allIndexes: [Int?] = Array(0 ..< ink.count)
+        for node in leafNodes {
+            for index in node.indexes {
+                allIndexes[index] = nil
+            }
+        }
+        let undefinedIndexes = allIndexes.flatMap { $0 }
+        
+        if !undefinedIndexes.isEmpty {
+            let sqrtThresh: CGFloat = 22.0
+            for index in undefinedIndexes {
+                let stroke = ink[index]
+                leafNodes.append(
+                    InkNode(indexes: [index],
+                            candidates: stroke.frame.height < sqrtThresh ? ["-", "√"] : ["√", "-"])
+                )
+            }
         }
         
         // FIXME: ** TEST CODE **
         print(leafNodes);
         // **
         
-        // TODO: Set leaf nodes and undefined rule nodes
-//        nodes = leafNodes
+        nodes = leafNodes
         delegate?.manager(self, didParseTreeToLaTex: String(string))
     }
     
