@@ -60,6 +60,13 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - Ink
     
+    private func getInk(for node: TerminalNodeType) -> [InkType]  {
+        var arrInk = [InkType]()
+        for i in node.indexes { arrInk.append(ink[i]) }
+        
+        return arrInk
+    }
+    
     private func padded(rect: CGRect) -> CGRect {
         return CGRect(x: rect.origin.x - padding,
                       y: rect.origin.y - padding,
@@ -149,18 +156,17 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         }
         
         var candidateIndexes = [Int]()
-        var nodeStrokes = [[InkType]]()
+        var nodeInks = [[InkType]]()
         var nodeFrames = [CGRect]()
         
         for (nodeIndex, node) in nodes.enumerated() {
-            var strokes = [InkType]()
-            for i in node.indexes { strokes.append(ink[i]) }
-            let bounds = padded(rect: strokes.reduce(strokes.first!.frame) { $0.1.frame.union($0.0) })
+            let ink = getInk(for: node)
+            let frame = padded(rect: ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) })
             
-            nodeStrokes.append(strokes)
-            nodeFrames.append(bounds)
+            nodeInks.append(ink)
+            nodeFrames.append(frame)
 
-            guard bounds.contains(point) else { continue }
+            guard frame.contains(point) else { continue }
             
             candidateIndexes.append(nodeIndex)
         }
@@ -182,17 +188,17 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         guard let index = indexOfSelectedNode else { return nil }
         
-        return Node(ink: nodeStrokes[index], frame: nodeFrames[index])
+        return Node(ink: nodeInks[index], frame: nodeFrames[index])
     }
     
     internal func removeSelectedNode() -> CGRect? {
         guard indexOfSelectedNode != nil else { return nil }
         
-        var strokes = [InkType]()
-        for i in nodes[indexOfSelectedNode!].indexes { strokes.append(ink[i]) }
-        let bounds = padded(rect: strokes.reduce(strokes.first!.frame) { $0.1.frame.union($0.0) })
+        let node = nodes[indexOfSelectedNode!]
+        let ink = getInk(for: node)
+        let frame = padded(rect: ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) })
 
-        for index in nodes[indexOfSelectedNode!].indexes.sorted(by: >) {
+        for index in node.indexes.sorted(by: >) {
             inkCache.remove(at: index)
         }
         
@@ -203,7 +209,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         process()
         
-        return bounds
+        return frame
     }
     
     // MARK: - MathInkParser delegate
