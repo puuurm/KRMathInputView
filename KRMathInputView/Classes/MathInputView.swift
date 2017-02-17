@@ -14,7 +14,7 @@ import UIKit
     func mathInputView(_ mathInputView: MathInputView, didChangeModeTo isWritingMode: Bool)
 }
 
-open class MathInputView: UIView, MathInkManagerDelegate {
+open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSource {
     open weak var delegate: MathInputViewDelegate?
     
     public var isWritingMode: Bool = true {
@@ -35,6 +35,9 @@ open class MathInputView: UIView, MathInkManagerDelegate {
     
     @IBOutlet open weak var undoButton: UIButton?
     @IBOutlet open weak var redoButton: UIButton?
+    
+    public var lineWidth: CGFloat = 3.0
+    public var selectionPadding: CGFloat = 8.0
     
     public var selectionBGColor = UIColor(hex: 0x00BCD4, alpha: 0.1)
     public var selectionStrokeColor = UIColor(hex: 0x00BCD4)
@@ -69,6 +72,7 @@ open class MathInputView: UIView, MathInkManagerDelegate {
         addGestureRecognizer(longPressGestureRecognizer)
         
         manager.delegate = self
+        manager.dataSource = self
     }
     
     // MARK: - Public
@@ -115,16 +119,16 @@ open class MathInputView: UIView, MathInkManagerDelegate {
                 
                 ctx.fill(CGRect(origin: CGPoint.zero, size: node.frame.size))
                 ctx.translateBy(x: -node.frame.origin.x, y: -node.frame.origin.y)
-                ctx.setLineWidth(3.0)
+                ctx.setLineWidth(lineWidth)
+                ctx.setLineCap(.round)
                 
-                for strokeInk in arrStrokeInk {
-                    ctx.addPath(strokeInk.path.cgPath)
-                }
+                for strokeInk in arrStrokeInk { ctx.addPath(strokeInk.path.cgPath) }
                 
                 ctx.strokePath()
-                ctx.restoreGState()
                 
+                ctx.restoreGState()
                 image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+                
                 UIGraphicsEndImageContext()
             } else {
                 // TODO: Implement CharacterInk drawing

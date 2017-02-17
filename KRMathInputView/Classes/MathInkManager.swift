@@ -14,11 +14,15 @@ public protocol MathInkManagerDelegate: class {
     func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool))
 }
 
+public protocol MathInkManagerDataSource: class {
+    var selectionPadding: CGFloat { get }
+    var lineWidth: CGFloat { get }
+}
+
 open class MathInkManager: NSObject, MathInkParserDelegate {
     
     public weak var delegate: MathInkManagerDelegate?
-    
-    public var lineWidth: CGFloat = 3.0
+    public weak var dataSource: MathInkManagerDataSource?
     
     public private(set) var buffer: UIBezierPath?
     
@@ -31,6 +35,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     private var inkIndex = 0
     private var inkCache = [InkType]()
+    
+    private var padding: CGFloat {
+        return dataSource!.lineWidth + dataSource!.selectionPadding
+    }
     
     open var parser: MathInkParser? {
         didSet { parser?.delegate = self }
@@ -52,6 +60,14 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - Ink
     
+    private func padded(rect: CGRect) -> CGRect {
+        return CGRect(x: rect.origin.x - padding,
+                      y: rect.origin.y - padding,
+                      width: rect.size.width + padding * 2.0,
+                      height: rect.size.height + padding * 2.0
+        )
+    }
+    
     internal func addInkFromBuffer() {
         if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
         
@@ -68,7 +84,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         if buffer == nil {
             buffer = UIBezierPath()
-            buffer!.lineWidth = lineWidth
+            buffer!.lineWidth = dataSource!.lineWidth
             buffer!.lineCapStyle = .round
             buffer!.move(to: previousPoint)
         }
@@ -86,12 +102,12 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         
         return { () -> CGRect in
-            let minX = min(point.x, bufferPoint.x) - lineWidth * 2.0
-            let maxX = max(point.x, bufferPoint.x) + lineWidth * 4.0
-            let minY = min(point.y, bufferPoint.y) - lineWidth * 2.0
-            let maxY = max(point.y, bufferPoint.y) + lineWidth * 4.0
+            let minX = min(point.x, bufferPoint.x)
+            let maxX = max(point.x, bufferPoint.x)
+            let minY = min(point.y, bufferPoint.y)
+            let maxY = max(point.y, bufferPoint.y)
             
-            return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+            return padded(rect: CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY))
         }()
     }
     
@@ -101,14 +117,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         process()
         
-        return { () -> CGRect in
-            var frame = inkCache[inkIndex].frame
-            frame.origin.x -= lineWidth * 2.0
-            frame.origin.y -= lineWidth * 2.0
-            frame.size.width += lineWidth * 4.0
-            frame.size.height += lineWidth * 4.0
-            return frame
-        }()
+        return padded(rect: inkCache[inkIndex].frame)
     }
     
     internal func redo() -> CGRect? {
@@ -117,14 +126,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         process()
         
-        return { () -> CGRect in
-            var frame = inkCache[inkIndex - 1].frame
-            frame.origin.x -= lineWidth * 2.0
-            frame.origin.y -= lineWidth * 2.0
-            frame.size.width += lineWidth * 4.0
-            frame.size.height += lineWidth * 4.0
-            return frame
-            }()
+        return padded(rect: inkCache[inkIndex - 1].frame)
     }
     
     internal func process() {
@@ -154,7 +156,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             let bounds = strokes.reduce(strokes.first!.frame) { $0.1.frame.union($0.0) }
             
             nodeStrokes.append(strokes)
-            nodeFrames.append(bounds)
+            nodeFrames.append(padded(rect: bounds))
 
             guard bounds.contains(point) else { continue }
             
