@@ -9,8 +9,9 @@
 import UIKit
 
 @objc public protocol MathInputViewDelegate: NSObjectProtocol {
-    func mathInputView(_ MathInputView: MathInputView, didParse ink: [Any], latex: String)
-    func mathInputView(_ MathInputView: MathInputView, didFailToParse ink: [Any], with error: NSError)
+    func mathInputView(_ mathInputView: MathInputView, didParse ink: [Any], latex: String)
+    func mathInputView(_ mathInputView: MathInputView, didFailToParse ink: [Any], with error: NSError)
+    func mathInputView(_ mathInputView: MathInputView, didChangeModeTo isWritingMode: Bool)
 }
 
 open class MathInputView: UIView, MathInkManagerDelegate {
@@ -21,6 +22,9 @@ open class MathInputView: UIView, MathInkManagerDelegate {
             tapGestureRecognizer.isEnabled = !newValue
             longPressGestureRecognizer.isEnabled = !newValue
         }
+        didSet {
+            delegate?.mathInputView(self, didChangeModeTo: isWritingMode)
+        }
     }
     
     open var manager = MathInkManager()
@@ -30,7 +34,6 @@ open class MathInputView: UIView, MathInkManagerDelegate {
     
     private let tapGestureRecognizer = UITapGestureRecognizer()
     private let longPressGestureRecognizer = UILongPressGestureRecognizer()
-    
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -102,19 +105,23 @@ open class MathInputView: UIView, MathInkManagerDelegate {
     // MARK: - Touch
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isWritingMode else { return }
         register(touch: touches.first!)
     }
     
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if !isWritingMode { isWritingMode = true }
         register(touch: touches.first!)
     }
     
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isWritingMode else { return }
         register(touch: touches.first!, isLast: true)
         manager.process()
     }
     
     override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isWritingMode else { return }
         register(touch: touches.first!, isLast: true)
         manager.process()
     }
@@ -131,11 +138,11 @@ open class MathInputView: UIView, MathInkManagerDelegate {
         showCursor(at: node.frame)
     }
     
-    @IBAction public func undoAction(_ sender: UIButton?) {
+    @IBAction open func undoAction(_ sender: UIButton?) {
         if let rect = manager.undo() { setNeedsDisplay(rect) }
     }
     
-    @IBAction public func redoAction(_ sender: UIButton?) {
+    @IBAction open func redoAction(_ sender: UIButton?) {
         if let rect = manager.redo() { setNeedsDisplay(rect) }
     }
     
