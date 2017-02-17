@@ -205,12 +205,26 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     
     @IBAction open func undoAction(_ sender: UIButton?) {
         if !isWritingMode { isWritingMode = true }
-        if let rect = manager.undo() { setNeedsDisplay(rect) }
+        if let rect = manager.undo() {
+            setNeedsDisplay(rect)
+        }
     }
     
     @IBAction open func redoAction(_ sender: UIButton?) {
         if !isWritingMode { isWritingMode = true }
-        if let rect = manager.redo() { setNeedsDisplay(rect) }
+        if let rect = manager.redo() {
+            setNeedsDisplay(rect)
+        }
+    }
+    
+    @IBAction open func removeAction(_ sender: UIButton?) {
+        guard selectedNodeLayer != nil else { return }
+        
+        if let rect = manager.removeSelectedNode() {
+            setNeedsDisplay(rect)
+        }
+        
+        selectedNodeLayer!.removeFromSuperlayer()
     }
     
     // MARK: - MyScriptParser delegate

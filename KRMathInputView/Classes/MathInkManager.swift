@@ -140,6 +140,8 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         parser.parse()
     }
     
+    // MARK: - Node
+    
     internal func selectNode(at point: CGPoint?) -> Node? {
         guard let point = point else {
             indexOfSelectedNode = nil
@@ -181,6 +183,27 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard let index = indexOfSelectedNode else { return nil }
         
         return Node(ink: nodeStrokes[index], frame: nodeFrames[index])
+    }
+    
+    internal func removeSelectedNode() -> CGRect? {
+        guard indexOfSelectedNode != nil else { return nil }
+        
+        var strokes = [InkType]()
+        for i in nodes[indexOfSelectedNode!].indexes { strokes.append(ink[i]) }
+        let bounds = padded(rect: strokes.reduce(strokes.first!.frame) { $0.1.frame.union($0.0) })
+
+        for index in nodes[indexOfSelectedNode!].indexes.sorted(by: >) {
+            inkCache.remove(at: index)
+        }
+        
+        inkIndex -= nodes[indexOfSelectedNode!].indexes.count
+        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        
+        indexOfSelectedNode = nil
+        
+        process()
+        
+        return bounds
     }
     
     // MARK: - MathInkParser delegate
