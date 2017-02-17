@@ -145,7 +145,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         for (nodeIndex, node) in nodes.enumerated() {
             var strokes = [InkType]()
-            for i in node.indexes { strokes.append(inkCache[i]) }
+            for i in node.indexes { strokes.append(ink[i]) }
             let bounds = strokes.reduce(strokes.first!.frame) { $0.1.frame.union($0.0) }
             
             nodeStrokes.append(strokes)
