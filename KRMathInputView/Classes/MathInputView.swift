@@ -202,10 +202,12 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     }
     
     @IBAction open func undoAction(_ sender: UIButton?) {
+        if !isWritingMode { isWritingMode = true }
         if let rect = manager.undo() { setNeedsDisplay(rect) }
     }
     
     @IBAction open func redoAction(_ sender: UIButton?) {
+        if !isWritingMode { isWritingMode = true }
         if let rect = manager.redo() { setNeedsDisplay(rect) }
     }
     
