@@ -138,7 +138,12 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         parser.parse()
     }
     
-    internal func selectNode(at point: CGPoint) -> Node? {
+    internal func selectNode(at point: CGPoint?) -> Node? {
+        guard let point = point else {
+            indexOfSelectedNode = nil
+            return nil
+        }
+        
         var candidateIndexes = [Int]()
         var nodeStrokes = [[InkType]]()
         var nodeFrames = [CGRect]()

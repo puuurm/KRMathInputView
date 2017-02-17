@@ -21,9 +21,13 @@ open class MathInputView: UIView, MathInkManagerDelegate {
         willSet {
             tapGestureRecognizer.isEnabled = !newValue
             longPressGestureRecognizer.isEnabled = !newValue
+            
+            if !isWritingMode && newValue { selectNode(at: nil) }
         }
         didSet {
-            delegate?.mathInputView(self, didChangeModeTo: isWritingMode)
+            if oldValue != isWritingMode {
+                delegate?.mathInputView(self, didChangeModeTo: isWritingMode)
+            }
         }
     }
     
@@ -32,8 +36,16 @@ open class MathInputView: UIView, MathInkManagerDelegate {
     @IBOutlet open weak var undoButton: UIButton?
     @IBOutlet open weak var redoButton: UIButton?
     
+    public var selectionBGColor = UIColor(hex: 0x00BCD4, alpha: 0.1)
+    public var selectionStrokeColor = UIColor(hex: 0x00BCD4)
+    
+    private weak var selectedNodeLayer: CALayer?
+    
     private let tapGestureRecognizer = UITapGestureRecognizer()
     private let longPressGestureRecognizer = UILongPressGestureRecognizer()
+    
+    private let drawingQueue = DispatchQueue(label: "com.knowre.KRMathInputView.drawingQueue",
+                                             qos: DispatchQoS.userInitiated)
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,7 +80,7 @@ open class MathInputView: UIView, MathInkManagerDelegate {
             if let strokeInk = ink as? StrokeInk, rect.intersects(strokeInk.path.bounds) {
                 strokeInk.path.stroke()
             } else {
-                
+                // TODO: Implement
             }
         }
         
@@ -77,14 +89,61 @@ open class MathInputView: UIView, MathInkManagerDelegate {
     
     // MARK: - Private
     
-    private func selectNode(at point: CGPoint) -> Node? {
-        guard let node = manager.selectNode(at: point) else { return nil }
-        displaySelection(at: node.frame)
+    @discardableResult
+    private func selectNode(at point: CGPoint?) -> Node? {
+        let node = manager.selectNode(at: point)
+        display(node: node)
         return node
     }
     
-    private func displaySelection(at: CGRect) {
-        // TODO: Implement
+    private func display(node: Node?) {
+        selectedNodeLayer?.removeFromSuperlayer()
+        
+        guard let node = node else { return }
+        
+        drawingQueue.sync {
+            var image: CGImage?
+            
+            // Draw image of strokes and the bounding box
+            if let arrStrokeInk = node.ink as? [StrokeInk] {
+                UIGraphicsBeginImageContextWithOptions(node.frame.size, false, 0.0)
+                guard let ctx = UIGraphicsGetCurrentContext() else { return }
+                ctx.saveGState()
+                
+                selectionBGColor.setFill()
+                selectionStrokeColor.setStroke()
+                
+                ctx.fill(CGRect(origin: CGPoint.zero, size: node.frame.size))
+                ctx.translateBy(x: -node.frame.origin.x, y: -node.frame.origin.y)
+                ctx.setLineWidth(3.0)
+                
+                for strokeInk in arrStrokeInk {
+                    ctx.addPath(strokeInk.path.cgPath)
+                }
+                
+                ctx.strokePath()
+                ctx.restoreGState()
+                
+                image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+                UIGraphicsEndImageContext()
+            } else {
+                // TODO: Implement CharacterInk drawing
+            }
+            
+            // Set as layer content and assign `selectedNodeLayer`
+            guard image != nil else { return }
+            
+            let imageLayer = CALayer()
+            imageLayer.frame = node.frame
+            imageLayer.contents = image
+            
+            DispatchQueue.main.async {
+                // Add as sublayer
+                self.layer.addSublayer(imageLayer)
+                self.selectedNodeLayer = imageLayer
+            }
+        }
+        
     }
     
     private func showMenu(at: CGRect) {
