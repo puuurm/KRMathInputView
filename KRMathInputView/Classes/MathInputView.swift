@@ -63,6 +63,8 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     }
     
     private func setUp() {
+        clipsToBounds = true
+        
         tapGestureRecognizer.addTarget(self, action: #selector(tapAction(_:)))
         tapGestureRecognizer.isEnabled = false
         addGestureRecognizer(tapGestureRecognizer)
