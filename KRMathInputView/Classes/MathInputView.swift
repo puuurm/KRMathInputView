@@ -133,7 +133,7 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
             
             UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
             guard let fontCtx = UIGraphicsGetCurrentContext() else { return }
-            fontCtx.textPosition = CGPoint.zero
+            fontCtx.textPosition = CGPoint(x: -frame.origin.x, y: -frame.origin.y)
             
             CTLineDraw(line, fontCtx)
             
