@@ -155,7 +155,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             return nil
         }
         
-        var candidateIndexes = [Int]()
+        var arrNodeIndexes = [Int]()
         var nodeInks = [[InkType]]()
         var nodeFrames = [CGRect]()
         
@@ -168,27 +168,27 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
 
             guard frame.contains(point) else { continue }
             
-            candidateIndexes.append(nodeIndex)
+            arrNodeIndexes.append(nodeIndex)
         }
         
-        switch candidateIndexes.count {
+        switch arrNodeIndexes.count {
         case 0: indexOfSelectedNode = nil
-        case 1: indexOfSelectedNode = candidateIndexes[0]
+        case 1: indexOfSelectedNode = arrNodeIndexes[0]
         default:
             if indexOfSelectedNode == nil {
-                indexOfSelectedNode = candidateIndexes[0]
+                indexOfSelectedNode = arrNodeIndexes[0]
             } else {
-                if let i = candidateIndexes.index(of: indexOfSelectedNode!), i + 1 < candidateIndexes.count {
-                    indexOfSelectedNode = candidateIndexes[i + 1]
+                if let i = arrNodeIndexes.index(of: indexOfSelectedNode!), i + 1 < arrNodeIndexes.count {
+                    indexOfSelectedNode = arrNodeIndexes[i + 1]
                 } else {
-                    indexOfSelectedNode = candidateIndexes[0]
+                    indexOfSelectedNode = arrNodeIndexes[0]
                 }
             }
         }
         
         guard let index = indexOfSelectedNode else { return nil }
         
-        return Node(ink: nodeInks[index], frame: nodeFrames[index])
+        return Node(ink: nodeInks[index], frame: nodeFrames[index], candidates: nodes[index].candidates)
     }
     
     internal func removeSelectedNode() -> CGRect? {

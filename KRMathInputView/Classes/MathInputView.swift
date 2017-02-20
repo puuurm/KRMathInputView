@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KRStackView
 
 @objc public protocol MathInputViewDelegate: NSObjectProtocol {
     func mathInputView(_ mathInputView: MathInputView, didParse ink: [Any], latex: String)
@@ -43,6 +44,7 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     public var selectionStrokeColor = UIColor(hex: 0x00BCD4)
     public var fontName: String?
     
+    private weak var candidatesView: KRStackView?
     private weak var selectedNodeLayer: CALayer?
     
     private let tapGestureRecognizer = UITapGestureRecognizer()
@@ -89,11 +91,12 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
                 strokeInk.path.stroke()
             } else {
                 // TODO: Add error handling
+                guard let ctx = UIGraphicsGetCurrentContext() else { return }
                 guard let charInk = ink as? CharacterInk else { return }
                 guard rect.intersects(charInk.frame) else { continue }
                 guard let image = getImage(for: charInk, strokeColor: UIColor.black) else { return }
                 
-                image.draw(in: charInk.frame)
+                ctx.draw(image.cgImage!, in: charInk.frame)
             }
         }
         
@@ -125,12 +128,12 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
             let line = CTLineCreateWithAttributedString(attribString as CFAttributedString)
             var frame = CTLineGetImageBounds(line, nil)
             
-            frame.size.height -= frame.origin.x
-            frame.size.height -= frame.origin.y
+            frame.size.width += abs(frame.origin.x)
+            frame.size.height += abs(frame.origin.y)
             
             UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
             guard let fontCtx = UIGraphicsGetCurrentContext() else { return }
-            fontCtx.textPosition = CGPoint(x: -frame.origin.x, y: -frame.origin.y)
+            fontCtx.textPosition = CGPoint.zero
             
             CTLineDraw(line, fontCtx)
             
@@ -144,6 +147,7 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     // TODO: Add error handling
     private func display(node: Node?) {
         selectedNodeLayer?.removeFromSuperlayer()
+        candidatesView?.removeFromSuperview()
         
         guard let node = node else { return }
         
@@ -195,11 +199,35 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         
     }
     
-    private func showMenu(at: CGRect) {
+    private func showMenu(for node: Node) {
+        // FIXME: ** Replace with permanent solution **
+        var buttons = [UIButton]()
+        for candidate in node.candidates {
+            let button = UIButton(type: .system)
+            button.bounds.size = CGSize(width: 50.0, height: 50.0)
+            button.setTitle(candidate, for: .normal)
+            button.addTarget(self, action: #selector(replaceAction(_:)), for: .touchUpInside)
+            buttons.append(button)
+        }
+        let stackView = KRStackView(subviews: buttons)
+        stackView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+        stackView.direction = .horizontal
+        stackView.layoutSubviews()
+        addSubview(stackView)
+        
+        candidatesView = stackView
+        // **
+    }
+    
+    private func hideMenu(for node: Node) {
         
     }
     
-    private func showCursor(at: CGRect) {
+    private func showCursor(for node: Node) {
+        
+    }
+    
+    private func hideCursor(for node: Node) {
         
     }
     
@@ -238,12 +266,12 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     
     @objc private func tapAction(_ sender: UITapGestureRecognizer) {
         guard let node = selectNode(at: sender.location(in: self)) else { return }
-        showMenu(at: node.frame)
+        showMenu(for: node)
     }
     
     @objc private func longPressAction(_ sender: UILongPressGestureRecognizer) {
         guard let node = selectNode(at: sender.location(in: self)) else { return }
-        showCursor(at: node.frame)
+        showCursor(for: node)
     }
     
     @IBAction open func undoAction(_ sender: UIButton?) {
@@ -264,10 +292,15 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         guard selectedNodeLayer != nil else { return }
         
         selectedNodeLayer!.removeFromSuperlayer()
+        candidatesView!.removeFromSuperview()
         
         if let rect = manager.removeSelectedNode() {
             setNeedsDisplay(rect)
         }
+    }
+    
+    @IBAction open func replaceAction(_ sender: UIButton?) {
+        replace(with: Character(sender!.titleLabel!.text!))
     }
     
     open func replace(with character: Character) {
@@ -278,6 +311,7 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         }
         
         selectedNodeLayer!.removeFromSuperlayer()
+        candidatesView!.removeFromSuperview()
     }
     
     // MARK: - MyScriptParser delegate

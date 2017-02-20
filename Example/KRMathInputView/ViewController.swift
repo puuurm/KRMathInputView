@@ -20,7 +20,6 @@ class MyScriptView: MathInputView {
 }
 
 class ViewController: UIViewController, MathInputViewDelegate {
-
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var mathInputView: MyScriptView!
     
@@ -53,6 +52,10 @@ class ViewController: UIViewController, MathInputViewDelegate {
     
     func mathInputView(_ MathInputView: MathInputView, didFailToParse ink: [Any], with error: NSError) {
         print(error)
+    }
+    
+    public func mathInputView(_ mathInputView: MathInputView, didChangeModeTo isWritingMode: Bool) {
+        
     }
     
 }
