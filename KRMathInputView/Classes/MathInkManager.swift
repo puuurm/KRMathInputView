@@ -265,10 +265,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             }
         }
         
-        // FIXME: ** TEST CODE **
-        print(leafNodes);
-        // **
-        
         nodes = leafNodes
         delegate?.manager(self, didParseTreeToLaTex: String(string))
     }
