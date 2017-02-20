@@ -54,12 +54,27 @@ public struct StrokeInk: InkType {
     }
 }
 
+@objc public class CharacterInkValue: NSObject {
+    public let character: NSString
+    public let frame: NSValue
+    
+    init(character: Character, frame: CGRect) {
+        self.character = NSString(string: String(character))
+        self.frame = NSValue(cgRect: frame)
+    }
+    
+    init(character: NSString, frame: NSValue) {
+        self.character = character
+        self.frame = frame
+    }
+}
+
 public struct CharacterInk: InkType {
     public let character: Character
     public var frame: CGRect
     
     public var objcType: Any {
-        return character
+        return CharacterInkValue(character: character, frame: frame)
     }
     
     public init(character: Character, frame: CGRect) {

@@ -41,6 +41,7 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     
     public var selectionBGColor = UIColor(hex: 0x00BCD4, alpha: 0.1)
     public var selectionStrokeColor = UIColor(hex: 0x00BCD4)
+    public var fontName: String?
     
     private weak var selectedNodeLayer: CALayer?
     
@@ -83,10 +84,16 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         UIColor.black.setStroke()
         
         for ink in manager.ink {
-            if let strokeInk = ink as? StrokeInk, rect.intersects(strokeInk.path.bounds) {
+            if let strokeInk = ink as? StrokeInk {
+                guard rect.intersects(strokeInk.path.bounds) else { continue }
                 strokeInk.path.stroke()
             } else {
-                // TODO: Implement
+                // TODO: Add error handling
+                guard let charInk = ink as? CharacterInk else { return }
+                guard rect.intersects(charInk.frame) else { continue }
+                guard let image = getImage(for: charInk, strokeColor: UIColor.black) else { return }
+                
+                image.draw(in: charInk.frame)
             }
         }
         
@@ -102,6 +109,39 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         return node
     }
     
+    private func getImage(for charInk: CharacterInk, strokeColor: UIColor) -> UIImage? {
+        var image: UIImage?
+        DispatchQueue.global(qos: .userInitiated).sync {
+            let size = charInk.frame.height - selectionPadding * 2.0
+            
+            let font = (fontName != nil ?
+                UIFont(name: fontName!, size: size) :
+                UIFont.systemFont(ofSize: size)) ?? UIFont.systemFont(ofSize: size)
+            let attrib = [NSFontAttributeName: font,
+                          NSForegroundColorAttributeName: strokeColor] as [String: Any]
+            let attribString = NSAttributedString(string: String(charInk.character),
+                                                  attributes: attrib)
+            
+            let line = CTLineCreateWithAttributedString(attribString as CFAttributedString)
+            var frame = CTLineGetImageBounds(line, nil)
+            
+            frame.size.height -= frame.origin.x
+            frame.size.height -= frame.origin.y
+            
+            UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
+            guard let fontCtx = UIGraphicsGetCurrentContext() else { return }
+            fontCtx.textPosition = CGPoint(x: -frame.origin.x, y: -frame.origin.y)
+            
+            CTLineDraw(line, fontCtx)
+            
+            image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        }
+        
+        return image
+    }
+    
+    // TODO: Add error handling
     private func display(node: Node?) {
         selectedNodeLayer?.removeFromSuperlayer()
         
@@ -111,30 +151,33 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
             var image: CGImage?
             
             // Draw image of strokes and the bounding box
+            UIGraphicsBeginImageContextWithOptions(node.frame.size, false, 0.0)
+            guard let ctx = UIGraphicsGetCurrentContext() else { return }
+            ctx.saveGState()
+            
+            ctx.setFillColor(selectionBGColor.cgColor)
+            ctx.setStrokeColor(selectionStrokeColor.cgColor)
+            ctx.fill(CGRect(origin: CGPoint.zero, size: node.frame.size))
+            ctx.translateBy(x: -node.frame.origin.x, y: -node.frame.origin.y)
+
             if let arrStrokeInk = node.ink as? [StrokeInk] {
-                UIGraphicsBeginImageContextWithOptions(node.frame.size, false, 0.0)
-                guard let ctx = UIGraphicsGetCurrentContext() else { return }
-                ctx.saveGState()
-                
-                selectionBGColor.setFill()
-                selectionStrokeColor.setStroke()
-                
-                ctx.fill(CGRect(origin: CGPoint.zero, size: node.frame.size))
-                ctx.translateBy(x: -node.frame.origin.x, y: -node.frame.origin.y)
                 ctx.setLineWidth(lineWidth)
                 ctx.setLineCap(.round)
                 
                 for strokeInk in arrStrokeInk { ctx.addPath(strokeInk.path.cgPath) }
                 
                 ctx.strokePath()
-                
-                ctx.restoreGState()
-                image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
-                
-                UIGraphicsEndImageContext()
             } else {
-                // TODO: Implement CharacterInk drawing
+                let charInk = (node.ink as! [CharacterInk])[0]
+                
+                guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else { return }
+                ctx.draw(image, in: charInk.frame)
             }
+            
+            ctx.restoreGState()
+            image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+            
+            UIGraphicsEndImageContext()
             
             // Set as layer content and assign `selectedNodeLayer`
             guard image != nil else { return }
@@ -220,7 +263,17 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     @IBAction open func removeAction(_ sender: UIButton?) {
         guard selectedNodeLayer != nil else { return }
         
+        selectedNodeLayer!.removeFromSuperlayer()
+        
         if let rect = manager.removeSelectedNode() {
+            setNeedsDisplay(rect)
+        }
+    }
+    
+    open func replace(with character: Character) {
+        guard selectedNodeLayer != nil else { return }
+        
+        if let rect = manager.replaceSelectedNode(with: character) {
             setNeedsDisplay(rect)
         }
         

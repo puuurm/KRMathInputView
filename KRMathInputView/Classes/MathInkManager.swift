@@ -196,20 +196,44 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         let node = nodes[indexOfSelectedNode!]
         let ink = getInk(for: node)
-        let frame = padded(rect: ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) })
+        let frame = ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) }
 
         for index in node.indexes.sorted(by: >) {
             inkCache.remove(at: index)
         }
         
-        inkIndex -= nodes[indexOfSelectedNode!].indexes.count
+        inkIndex -= node.indexes.count
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         
         indexOfSelectedNode = nil
         
         process()
         
-        return frame
+        return padded(rect: frame)
+    }
+    
+    internal func replaceSelectedNode(with character: Character) -> CGRect? {
+        guard indexOfSelectedNode != nil else { return nil }
+
+        let node = nodes[indexOfSelectedNode!]
+        let arrInk = getInk(for: node)
+        let frame = arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) }
+        
+        for index in node.indexes.sorted(by: >) {
+            inkCache.remove(at: index)
+        }
+        
+        inkIndex -= node.indexes.count
+        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+
+        inkCache.insert(CharacterInk(character: character, frame: frame), at: inkIndex)
+        inkIndex += 1
+        
+        indexOfSelectedNode = nil
+        
+        process()
+        
+        return padded(rect: frame)
     }
     
     // MARK: - MathInkParser delegate
