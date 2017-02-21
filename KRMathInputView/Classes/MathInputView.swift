@@ -164,19 +164,20 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
             ctx.fill(CGRect(origin: CGPoint.zero, size: node.frame.size))
             ctx.translateBy(x: -node.frame.origin.x, y: -node.frame.origin.y)
 
-            if let arrStrokeInk = node.ink as? [StrokeInk] {
-                ctx.setLineWidth(lineWidth)
-                ctx.setLineCap(.round)
-                
-                for strokeInk in arrStrokeInk { ctx.addPath(strokeInk.path.cgPath) }
-                
-                ctx.strokePath()
-            } else {
-                let charInk = (node.ink as! [CharacterInk])[0]
-                
-                guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else { return }
-                ctx.draw(image, in: charInk.frame)
+            ctx.setLineWidth(lineWidth)
+            ctx.setLineCap(.round)
+            
+            for ink in node.ink {
+                if let strokeInk = ink as? StrokeInk {
+                    ctx.addPath(strokeInk.path.cgPath)
+                } else {
+                    let charInk = ink as! CharacterInk
+                    guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else { return }
+                    ctx.draw(image, in: charInk.frame)
+                }
             }
+            
+            ctx.strokePath()
             
             ctx.restoreGState()
             image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
@@ -219,8 +220,9 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         // **
     }
     
-    private func hideMenu(for node: Node) {
-        
+    private func hideMenu() {
+        candidatesView?.removeFromSuperview()
+        selectedNodeLayer?.removeFromSuperlayer()
     }
     
     private func showCursor(for node: Node) {
@@ -246,7 +248,10 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     }
     
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !isWritingMode { isWritingMode = true }
+        if !isWritingMode {
+            hideMenu()
+            isWritingMode = true
+        }
         register(touch: touches.first!)
     }
     
@@ -265,34 +270,39 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     // MARK: - Target action
     
     @objc private func tapAction(_ sender: UITapGestureRecognizer) {
+        hideMenu()
         guard let node = selectNode(at: sender.location(in: self)) else { return }
         showMenu(for: node)
     }
     
     @objc private func longPressAction(_ sender: UILongPressGestureRecognizer) {
+        hideMenu()
         guard let node = selectNode(at: sender.location(in: self)) else { return }
         showCursor(for: node)
     }
     
     @IBAction open func undoAction(_ sender: UIButton?) {
-        if !isWritingMode { isWritingMode = true }
+        if !isWritingMode {
+            hideMenu()
+            isWritingMode = true
+        }
         if let rect = manager.undo() {
             setNeedsDisplay(rect)
         }
     }
     
     @IBAction open func redoAction(_ sender: UIButton?) {
-        if !isWritingMode { isWritingMode = true }
+        if !isWritingMode {
+            hideMenu()
+            isWritingMode = true
+        }
         if let rect = manager.redo() {
             setNeedsDisplay(rect)
         }
     }
     
     @IBAction open func removeAction(_ sender: UIButton?) {
-        guard selectedNodeLayer != nil else { return }
-        
-        selectedNodeLayer!.removeFromSuperlayer()
-        candidatesView!.removeFromSuperview()
+        hideMenu()
         
         if let rect = manager.removeSelectedNode() {
             setNeedsDisplay(rect)
@@ -304,14 +314,11 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     }
     
     open func replace(with character: Character) {
-        guard selectedNodeLayer != nil else { return }
+        hideMenu()
         
         if let rect = manager.replaceSelectedNode(with: character) {
             setNeedsDisplay(rect)
         }
-        
-        selectedNodeLayer!.removeFromSuperlayer()
-        candidatesView!.removeFromSuperview()
     }
     
     // MARK: - MyScriptParser delegate
