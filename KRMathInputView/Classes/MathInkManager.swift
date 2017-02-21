@@ -269,6 +269,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         delegate?.manager(self, didParseTreeToLaTex: String(string))
     }
     
+    open func parser(_ parser: MathInkParser, didRemoveStrokeAt index: Int) {
+        // TODO: Implement
+    }
+    
     open func parser(_ parser: MathInkParser, didFailWith error: NSError) {
         delegate?.manager(self, didFailToParseWith: error)
     }
