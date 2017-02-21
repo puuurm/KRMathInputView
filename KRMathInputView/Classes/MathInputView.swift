@@ -50,9 +50,6 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     private let tapGestureRecognizer = UITapGestureRecognizer()
     private let longPressGestureRecognizer = UILongPressGestureRecognizer()
     
-    private let drawingQueue = DispatchQueue(label: "com.knowre.KRMathInputView.drawingQueue",
-                                             qos: DispatchQoS.userInitiated)
-    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -91,11 +88,11 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
                 strokeInk.path.stroke()
             } else {
                 // TODO: Add error handling
-                guard let ctx = UIGraphicsGetCurrentContext() else { return }
                 guard let charInk = ink as? CharacterInk else { return }
                 guard rect.intersects(charInk.frame) else { continue }
-                guard let image = getImage(for: charInk, strokeColor: UIColor.black) else { return }
                 
+                guard let ctx = UIGraphicsGetCurrentContext() else { return }
+                guard let image = getImage(for: charInk, strokeColor: UIColor.black) else { return }
                 ctx.draw(image.cgImage!, in: charInk.frame)
             }
         }
@@ -113,33 +110,30 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     }
     
     private func getImage(for charInk: CharacterInk, strokeColor: UIColor) -> UIImage? {
-        var image: UIImage?
-        DispatchQueue.global(qos: .userInitiated).sync {
-            let size = charInk.frame.height - selectionPadding * 2.0
-            
-            let font = (fontName != nil ?
-                UIFont(name: fontName!, size: size) :
-                UIFont.systemFont(ofSize: size)) ?? UIFont.systemFont(ofSize: size)
-            let attrib = [NSFontAttributeName: font,
-                          NSForegroundColorAttributeName: strokeColor] as [String: Any]
-            let attribString = NSAttributedString(string: String(charInk.character),
-                                                  attributes: attrib)
-            
-            let line = CTLineCreateWithAttributedString(attribString as CFAttributedString)
-            var frame = CTLineGetImageBounds(line, nil)
-            
-            frame.size.width += abs(frame.origin.x)
-            frame.size.height += abs(frame.origin.y)
-            
-            UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
-            guard let fontCtx = UIGraphicsGetCurrentContext() else { return }
-            fontCtx.textPosition = CGPoint(x: -frame.origin.x, y: -frame.origin.y)
-            
-            CTLineDraw(line, fontCtx)
-            
-            image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-        }
+        let size = charInk.frame.height - selectionPadding * 2.0
+        
+        let font = (fontName != nil ?
+            UIFont(name: fontName!, size: size) :
+            UIFont.systemFont(ofSize: size)) ?? UIFont.systemFont(ofSize: size)
+        let attrib = [NSFontAttributeName: font,
+                      NSForegroundColorAttributeName: strokeColor] as [String: Any]
+        let attribString = NSAttributedString(string: String(charInk.character),
+                                              attributes: attrib)
+        
+        let line = CTLineCreateWithAttributedString(attribString as CFAttributedString)
+        var frame = CTLineGetImageBounds(line, nil)
+        
+        frame.size.width += abs(frame.origin.x)
+        frame.size.height += abs(frame.origin.y)
+        
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
+        guard let fontCtx = UIGraphicsGetCurrentContext() else { return nil }
+        fontCtx.textPosition = CGPoint(x: -frame.origin.x, y: -frame.origin.y)
+        
+        CTLineDraw(line, fontCtx)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
         return image
     }
@@ -151,53 +145,46 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         
         guard let node = node else { return }
         
-        drawingQueue.sync {
-            var image: CGImage?
-            
-            // Draw image of strokes and the bounding box
-            UIGraphicsBeginImageContextWithOptions(node.frame.size, false, 0.0)
-            guard let ctx = UIGraphicsGetCurrentContext() else { return }
-            ctx.saveGState()
-            
-            ctx.setFillColor(selectionBGColor.cgColor)
-            ctx.setStrokeColor(selectionStrokeColor.cgColor)
-            ctx.fill(CGRect(origin: CGPoint.zero, size: node.frame.size))
-            ctx.translateBy(x: -node.frame.origin.x, y: -node.frame.origin.y)
-
-            ctx.setLineWidth(lineWidth)
-            ctx.setLineCap(.round)
-            
-            for ink in node.ink {
-                if let strokeInk = ink as? StrokeInk {
-                    ctx.addPath(strokeInk.path.cgPath)
-                } else {
-                    let charInk = ink as! CharacterInk
-                    guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else { return }
-                    ctx.draw(image, in: charInk.frame)
-                }
-            }
-            
-            ctx.strokePath()
-            
-            ctx.restoreGState()
-            image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
-            
-            UIGraphicsEndImageContext()
-            
-            // Set as layer content and assign `selectedNodeLayer`
-            guard image != nil else { return }
-            
-            let imageLayer = CALayer()
-            imageLayer.frame = node.frame
-            imageLayer.contents = image
-            
-            DispatchQueue.main.async {
-                // Add as sublayer
-                self.layer.addSublayer(imageLayer)
-                self.selectedNodeLayer = imageLayer
+        // Draw image of strokes and the bounding box
+        UIGraphicsBeginImageContextWithOptions(node.frame.size, false, 0.0)
+        guard let ctx = UIGraphicsGetCurrentContext() else { return }
+        ctx.saveGState()
+        
+        ctx.setFillColor(selectionBGColor.cgColor)
+        ctx.setStrokeColor(selectionStrokeColor.cgColor)
+        ctx.fill(CGRect(origin: CGPoint.zero, size: node.frame.size))
+        ctx.translateBy(x: -node.frame.origin.x, y: -node.frame.origin.y)
+        
+        ctx.setLineWidth(lineWidth)
+        ctx.setLineCap(.round)
+        
+        for ink in node.ink {
+            if let strokeInk = ink as? StrokeInk {
+                ctx.addPath(strokeInk.path.cgPath)
+            } else {
+                let charInk = ink as! CharacterInk
+                guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else { return }
+                ctx.draw(image, in: charInk.frame)
             }
         }
         
+        ctx.strokePath()
+        
+        ctx.restoreGState()
+        let image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+        
+        UIGraphicsEndImageContext()
+        
+        // Set as layer content and assign `selectedNodeLayer`
+        guard image != nil else { return }
+        
+        let imageLayer = CALayer()
+        imageLayer.frame = node.frame
+        imageLayer.contents = image
+        
+        // Add as sublayer
+        layer.addSublayer(imageLayer)
+        selectedNodeLayer = imageLayer
     }
     
     private func showMenu(for node: Node) {
