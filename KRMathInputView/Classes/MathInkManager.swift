@@ -26,8 +26,25 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     public private(set) var buffer: UIBezierPath?
     
-    public var ink: [InkType] {
-        return Array(inkCache.dropLast(inkCache.count - inkIndex))
+    public var ink: [Ink] {
+        var ink = [Ink]()
+        var arrIndexSet = [Set<Int>]()
+        
+        for inkInstance in Array(inkCache.dropLast(inkCache.count - inkIndex)) {
+            if let inkInstance = inkInstance as? Ink {
+                ink.append(inkInstance)
+            } else {
+                arrIndexSet.append((inkInstance as! RemovedInk).indexes)
+            }
+        }
+        
+        for indexSet in arrIndexSet {
+            for index in indexSet.sorted(by: >) {
+                ink.remove(at: index)
+            }
+        }
+
+        return ink
     }
     
     public var canUndo: Bool { return inkIndex > 0  }
@@ -143,7 +160,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             return
         }
         
-        parser.addInk(NSArray(array: ink.map { $0.objcType }))
+        parser.addInk(NSArray(array: ink.map { $0.objCType }))
         parser.parse()
     }
     
@@ -196,13 +213,15 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         let node = nodes[indexOfSelectedNode!]
         let ink = getInk(for: node)
+        
         let frame = ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) }
 
-        for index in node.indexes.sorted(by: >) {
-            inkCache.remove(at: index)
-        }
+        // FIXME: - ** REFACTOR **
+        if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
+        inkCache.append(RemovedInk(indexes: Set(node.indexes), frame: frame))
+        inkIndex += 1
+        // **
         
-        inkIndex -= node.indexes.count
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         
         indexOfSelectedNode = nil
