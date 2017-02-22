@@ -33,6 +33,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         for inkInstance in Array(inkCache.dropLast(inkCache.count - inkIndex)) {
             if let inkInstance = inkInstance as? Ink {
                 ink.append(inkInstance)
+                
+                if let rInk = inkInstance as? ReplacementInk {
+                    arrIndexSet.append(rInk.replacedIndexes)
+                }
             } else {
                 arrIndexSet.append((inkInstance as! RemovedInk).indexes)
             }
@@ -230,15 +234,9 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         let node = nodes[indexOfSelectedNode!]
         let (arrInk, frame) = getInk(for: node.indexes)
         
-        for index in node.indexes.sorted(by: >) {
-            inkCache.remove(at: index)
-        }
-        
-        inkIndex -= node.indexes.count
-        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
-
-        inkCache.insert(CharacterInk(character: character, frame: frame), at: inkIndex)
-        inkIndex += 1
+        add(ink: ReplacementInk(character: character,
+                                replacedIndexes: Set(node.indexes),
+                                frame: frame))
         
         indexOfSelectedNode = nil
         

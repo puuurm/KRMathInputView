@@ -16,6 +16,10 @@ public protocol ObjCConvertible {
     var objCType: NSObject { get }
 }
 
+public protocol CharacterInkType: InkType {
+    var character: Character { get }
+}
+
 public typealias Ink = InkType & ObjCConvertible
 
 public struct StrokeInk: Ink {
@@ -61,7 +65,6 @@ public struct StrokeInk: Ink {
 }
 
 @objc public class CharacterInkValue: NSObject {
-    
     public let character: NSString
     public let frame: NSValue
     
@@ -77,10 +80,10 @@ public struct StrokeInk: Ink {
     
 }
 
-public struct CharacterInk: Ink {
+public struct CharacterInk: Ink, CharacterInkType {
     
     public let character: Character
-    public var frame: CGRect
+    public let frame: CGRect
     
     public var objCType: NSObject {
         return CharacterInkValue(character: character, frame: frame)
@@ -94,6 +97,15 @@ public struct CharacterInk: Ink {
 }
 
 internal struct RemovedInk: InkType {
-    var indexes: Set<Int>
-    var frame: CGRect
+    let indexes: Set<Int>
+    let frame: CGRect
+}
+
+internal struct ReplacementInk: Ink, CharacterInkType {
+    let character: Character
+    let replacedIndexes: Set<Int>
+    let frame: CGRect
+    var objCType: NSObject {
+        return CharacterInkValue(character: character, frame: frame)
+    }
 }
