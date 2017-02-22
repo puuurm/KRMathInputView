@@ -77,11 +77,11 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - Ink
     
-    private func getInk(for node: TerminalNodeType) -> [InkType]  {
+    private func getInk(for indexes: [Int]) -> (arrInk: [InkType], frame: CGRect)  {
         var arrInk = [InkType]()
-        for i in node.indexes { arrInk.append(ink[i]) }
+        for i in indexes { arrInk.append(ink[i]) }
         
-        return arrInk
+        return (arrInk, arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) })
     }
     
     private func padded(rect: CGRect) -> CGRect {
@@ -177,11 +177,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         var nodeFrames = [CGRect]()
         
         for (nodeIndex, node) in nodes.enumerated() {
-            let ink = getInk(for: node)
-            let frame = padded(rect: ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) })
+            let (arrInk, frame) = getInk(for: node.indexes)
             
-            nodeInks.append(ink)
-            nodeFrames.append(frame)
+            nodeInks.append(arrInk)
+            nodeFrames.append(padded(rect: frame))
 
             guard frame.contains(point) else { continue }
             
@@ -212,8 +211,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard indexOfSelectedNode != nil else { return nil }
         
         let node = nodes[indexOfSelectedNode!]
-        let arrInk = getInk(for: node)
-        let frame = arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) }
+        let (arrInk, frame) = getInk(for: node.indexes)
         
         add(ink: RemovedInk(indexes: Set(node.indexes), frame: frame))
         
@@ -230,8 +228,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard indexOfSelectedNode != nil else { return nil }
 
         let node = nodes[indexOfSelectedNode!]
-        let arrInk = getInk(for: node)
-        let frame = arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) }
+        let (arrInk, frame) = getInk(for: node.indexes)
         
         for index in node.indexes.sorted(by: >) {
             inkCache.remove(at: index)
