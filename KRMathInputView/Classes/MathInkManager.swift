@@ -92,10 +92,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         )
     }
     
-    internal func addInkFromBuffer() {
+    internal func add(ink: InkType) {
         if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
         
-        inkCache.append(StrokeInk(path: buffer!))
+        inkCache.append(ink)
         inkIndex += 1
     }
     
@@ -119,7 +119,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             buffer!.addQuadCurve(to: midPoint(), controlPoint: previousPoint)
         } else {
             buffer!.addQuadCurve(to: point, controlPoint: previousPoint)
-            addInkFromBuffer()
+            add(ink: StrokeInk(path: buffer!))
             buffer = nil
         }
         
@@ -212,15 +212,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard indexOfSelectedNode != nil else { return nil }
         
         let node = nodes[indexOfSelectedNode!]
-        let ink = getInk(for: node)
+        let arrInk = getInk(for: node)
+        let frame = arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) }
         
-        let frame = ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) }
-
-        // FIXME: - ** REFACTOR **
-        if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
-        inkCache.append(RemovedInk(indexes: Set(node.indexes), frame: frame))
-        inkIndex += 1
-        // **
+        add(ink: RemovedInk(indexes: Set(node.indexes), frame: frame))
         
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         

@@ -13,7 +13,7 @@ public protocol InkType {
 }
 
 public protocol ObjCConvertible {
-    var objCType: NSObjectProtocol { get }
+    var objCType: NSObject { get }
 }
 
 public typealias Ink = InkType & ObjCConvertible
@@ -23,7 +23,7 @@ public struct StrokeInk: Ink {
     public let path: UIBezierPath
     public var frame: CGRect { return path.bounds }
     
-    public var objCType: NSObjectProtocol {
+    public var objCType: NSObject {
         var arr = NSMutableArray()
         let points = withUnsafeMutablePointer(to: &arr) { UnsafeMutablePointer<NSMutableArray>($0) }
         
@@ -82,7 +82,7 @@ public struct CharacterInk: Ink {
     public let character: Character
     public var frame: CGRect
     
-    public var objCType: NSObjectProtocol {
+    public var objCType: NSObject {
         return CharacterInkValue(character: character, frame: frame)
     }
     
