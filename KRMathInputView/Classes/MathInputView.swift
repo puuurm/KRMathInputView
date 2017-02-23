@@ -120,7 +120,7 @@ open class MathInputView: UIView, ProtocolCollection {
                 strokeInk.path.stroke()
             } else {
                 // TODO: Add error handling
-                guard let charInk = ink as? CharacterInk else { return }
+                guard let charInk = ink as? CharacterInkType else { return }
                 guard rect.intersects(charInk.frame) else { continue }
                 
                 guard let ctx = UIGraphicsGetCurrentContext() else { return }
@@ -134,7 +134,14 @@ open class MathInputView: UIView, ProtocolCollection {
     
     // MARK: - Private
     
-    private func getImage(for charInk: CharacterInk, strokeColor: UIColor) -> UIImage? {
+    @discardableResult
+    private func selectNode(at point: CGPoint?) -> Node? {
+        let node = manager.selectNode(at: point)
+        display(node: node)
+        return node
+    }
+    
+    private func getImage(for charInk: CharacterInkType, strokeColor: UIColor) -> UIImage? {
         let size = charInk.frame.height - selectionPadding * 2.0
         
         let font = (fontName != nil ?
@@ -188,7 +195,7 @@ open class MathInputView: UIView, ProtocolCollection {
             if let strokeInk = ink as? StrokeInk {
                 ctx.addPath(strokeInk.path.cgPath)
             } else {
-                let charInk = ink as! CharacterInk
+                let charInk = ink as! CharacterInkType
                 guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else { return }
                 ctx.draw(image, in: charInk.frame)
             }

@@ -10,15 +10,24 @@ import UIKit
 
 public protocol InkType {
     var frame: CGRect { get }
-    var objcType: Any { get }
 }
 
-public struct StrokeInk: InkType {
+public protocol ObjCConvertible {
+    var objCType: NSObject { get }
+}
+
+public protocol CharacterInkType: InkType {
+    var character: Character { get }
+}
+
+public typealias Ink = InkType & ObjCConvertible
+
+public struct StrokeInk: Ink {
 
     public let path: UIBezierPath
     public var frame: CGRect { return path.bounds }
     
-    public var objcType: Any {
+    public var objCType: NSObject {
         var arr = NSMutableArray()
         let points = withUnsafeMutablePointer(to: &arr) { UnsafeMutablePointer<NSMutableArray>($0) }
         
@@ -52,6 +61,7 @@ public struct StrokeInk: InkType {
     public init(path: UIBezierPath) {
         self.path = path
     }
+    
 }
 
 @objc public class CharacterInkValue: NSObject {
@@ -67,18 +77,35 @@ public struct StrokeInk: InkType {
         self.character = character
         self.frame = frame
     }
+    
 }
 
-public struct CharacterInk: InkType {
-    public let character: Character
-    public var frame: CGRect
+public struct CharacterInk: Ink, CharacterInkType {
     
-    public var objcType: Any {
+    public let character: Character
+    public let frame: CGRect
+    
+    public var objCType: NSObject {
         return CharacterInkValue(character: character, frame: frame)
     }
     
     public init(character: Character, frame: CGRect) {
         self.character = character
         self.frame = frame
+    }
+    
+}
+
+internal struct RemovedInk: InkType {
+    let indexes: Set<Int>
+    let frame: CGRect
+}
+
+internal struct ReplacementInk: Ink, CharacterInkType {
+    let character: Character
+    let replacedIndexes: Set<Int>
+    let frame: CGRect
+    var objCType: NSObject {
+        return CharacterInkValue(character: character, frame: frame)
     }
 }

@@ -26,8 +26,29 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     public private(set) var buffer: UIBezierPath?
     
-    public var ink: [InkType] {
-        return Array(inkCache.dropLast(inkCache.count - inkIndex))
+    public var ink: [Ink] {
+        var ink = [Ink]()
+        var arrIndexSet = [Set<Int>]()
+        
+        for inkInstance in Array(inkCache.dropLast(inkCache.count - inkIndex)) {
+            if let inkInstance = inkInstance as? Ink {
+                ink.append(inkInstance)
+                
+                if let rInk = inkInstance as? ReplacementInk {
+                    arrIndexSet.append(rInk.replacedIndexes)
+                }
+            } else {
+                arrIndexSet.append((inkInstance as! RemovedInk).indexes)
+            }
+        }
+        
+        for indexSet in arrIndexSet {
+            for index in indexSet.sorted(by: >) {
+                ink.remove(at: index)
+            }
+        }
+
+        return ink
     }
     
     public var canUndo: Bool { return inkIndex > 0  }
@@ -60,11 +81,11 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - Ink
     
-    private func getInk(for node: TerminalNodeType) -> [InkType]  {
+    private func getInk(for indexes: [Int]) -> (arrInk: [InkType], frame: CGRect)  {
         var arrInk = [InkType]()
-        for i in node.indexes { arrInk.append(ink[i]) }
+        for i in indexes { arrInk.append(ink[i]) }
         
-        return arrInk
+        return (arrInk, arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) })
     }
     
     private func padded(rect: CGRect) -> CGRect {
@@ -75,10 +96,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         )
     }
     
-    internal func addInkFromBuffer() {
+    internal func add(ink: InkType) {
         if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
         
-        inkCache.append(StrokeInk(path: buffer!))
+        inkCache.append(ink)
         inkIndex += 1
     }
     
@@ -102,7 +123,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             buffer!.addQuadCurve(to: midPoint(), controlPoint: previousPoint)
         } else {
             buffer!.addQuadCurve(to: point, controlPoint: previousPoint)
-            addInkFromBuffer()
+            add(ink: StrokeInk(path: buffer!))
             buffer = nil
         }
         
@@ -143,7 +164,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             return
         }
         
-        parser.addInk(NSArray(array: ink.map { $0.objcType }))
+        parser.addInk(NSArray(array: ink.map { $0.objCType }))
         parser.parse()
     }
     
@@ -160,11 +181,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         var nodeFrames = [CGRect]()
         
         for (nodeIndex, node) in nodes.enumerated() {
-            let ink = getInk(for: node)
-            let frame = padded(rect: ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) })
+            let (arrInk, frame) = getInk(for: node.indexes)
             
-            nodeInks.append(ink)
-            nodeFrames.append(frame)
+            nodeInks.append(arrInk)
+            nodeFrames.append(padded(rect: frame))
 
             guard frame.contains(point) else { continue }
             
@@ -195,14 +215,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard indexOfSelectedNode != nil else { return nil }
         
         let node = nodes[indexOfSelectedNode!]
-        let ink = getInk(for: node)
-        let frame = ink.reduce(ink.first!.frame) { $0.1.frame.union($0.0) }
-
-        for index in node.indexes.sorted(by: >) {
-            inkCache.remove(at: index)
-        }
+        let (arrInk, frame) = getInk(for: node.indexes)
         
-        inkIndex -= node.indexes.count
+        add(ink: RemovedInk(indexes: Set(node.indexes), frame: frame))
+        
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         
         indexOfSelectedNode = nil
@@ -216,26 +232,19 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         guard indexOfSelectedNode != nil else { return nil }
 
         let node = nodes[indexOfSelectedNode!]
-        let arrInk = getInk(for: node)
-        let frame = arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) }
+        let (arrInk, frame) = getInk(for: node.indexes)
         
-        for index in node.indexes.sorted(by: >) {
-            inkCache.remove(at: index)
-        }
-        
-        inkIndex -= node.indexes.count
-        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        let replacementInk = ReplacementInk(character: character,
+                                         replacedIndexes: Set(node.indexes),
+                                         frame: frame)
+        add(ink: replacementInk)
 
-        let charInk = CharacterInk(character: character, frame: frame)
-        inkCache.insert(charInk, at: inkIndex)
-        inkIndex += 1
-        
         indexOfSelectedNode = nil
         
         process()
         
         return (Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates),
-                Node(ink: [charInk], frame: padded(rect: frame), candidates: [String(character)]))
+                Node(ink: [replacementInk], frame: padded(rect: frame), candidates: [String(character)]))
     }
     
     // MARK: - MathInkParser delegate
