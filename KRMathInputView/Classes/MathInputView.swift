@@ -7,15 +7,26 @@
 //
 
 import UIKit
-import KRStackView
 
 @objc public protocol MathInputViewDelegate: NSObjectProtocol {
+    
+    func mathInputView(_ mathInputView: MathInputView, didTap node: ObjCNode?)
+    func mathInputView(_ mathInputView: MathInputView, didLongPress node: ObjCNode?)
+    func mathInputView(_ mathInputView: MathInputView, didRemove node: ObjCNode)
+    func mathInputView(_ mathInputView: MathInputView, didReplace oldNode: ObjCNode, with newNode: ObjCNode)
+    
     func mathInputView(_ mathInputView: MathInputView, didParse ink: [Any], latex: String)
     func mathInputView(_ mathInputView: MathInputView, didFailToParse ink: [Any], with error: NSError)
     func mathInputView(_ mathInputView: MathInputView, didChangeModeTo isWritingMode: Bool)
+    
 }
 
-open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSource {
+private typealias ProtocolCollection =
+    MathInkManagerDelegate & MathInkManagerDataSource &
+    KeyboardTypeDelegate & KeyboardTypeDataSource
+
+open class MathInputView: UIView, ProtocolCollection {
+    
     open weak var delegate: MathInputViewDelegate?
     
     public var isWritingMode: Bool = true {
@@ -23,7 +34,10 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
             tapGestureRecognizer.isEnabled = !newValue
             longPressGestureRecognizer.isEnabled = !newValue
             
-            if !isWritingMode && newValue { selectNode(at: nil) }
+            if !isWritingMode && newValue {
+                manager.selectNode(at: nil)
+                display(node: nil)
+            }
         }
         didSet {
             if oldValue != isWritingMode {
@@ -44,7 +58,25 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     public var selectionStrokeColor = UIColor(hex: 0x00BCD4)
     public var fontName: String?
     
-    private weak var candidatesView: KRStackView?
+    public var selectedNodeCandidates: [String]? {
+        guard let index = manager.indexOfSelectedNode else { return nil }
+        return manager.nodes[index].candidates
+    }
+    
+    public weak var candidatesView: KeyboardType? {
+        didSet {
+            candidatesView?.delegate = self
+            candidatesView?.dataSource = self
+        }
+    }
+    
+    public weak var keyboardView: KeyboardType? {
+        didSet {
+            keyboardView?.delegate = self
+            keyboardView?.dataSource = self
+        }
+    }
+    
     private weak var selectedNodeLayer: CALayer?
     
     private let tapGestureRecognizer = UITapGestureRecognizer()
@@ -102,13 +134,6 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     
     // MARK: - Private
     
-    @discardableResult
-    private func selectNode(at point: CGPoint?) -> Node? {
-        let node = manager.selectNode(at: point)
-        display(node: node)
-        return node
-    }
-    
     private func getImage(for charInk: CharacterInk, strokeColor: UIColor) -> UIImage? {
         let size = charInk.frame.height - selectionPadding * 2.0
         
@@ -139,9 +164,10 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     }
     
     // TODO: Add error handling
+    @discardableResult
     private func display(node: Node?) {
         selectedNodeLayer?.removeFromSuperlayer()
-        candidatesView?.removeFromSuperview()
+        candidatesView?.hideKeyboard(nil)
         
         guard let node = node else { return }
         
@@ -187,39 +213,6 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         selectedNodeLayer = imageLayer
     }
     
-    private func showMenu(for node: Node) {
-        // FIXME: ** Replace with permanent solution **
-        var buttons = [UIButton]()
-        for candidate in node.candidates {
-            let button = UIButton(type: .system)
-            button.bounds.size = CGSize(width: 50.0, height: 50.0)
-            button.setTitle(candidate, for: .normal)
-            button.addTarget(self, action: #selector(replaceAction(_:)), for: .touchUpInside)
-            buttons.append(button)
-        }
-        let stackView = KRStackView(subviews: buttons)
-        stackView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
-        stackView.direction = .horizontal
-        stackView.layoutSubviews()
-        addSubview(stackView)
-        
-        candidatesView = stackView
-        // **
-    }
-    
-    private func hideMenu() {
-        candidatesView?.removeFromSuperview()
-        selectedNodeLayer?.removeFromSuperlayer()
-    }
-    
-    private func showCursor(for node: Node) {
-        
-    }
-    
-    private func hideCursor(for node: Node) {
-        
-    }
-    
     private func register(touch: UITouch, isLast: Bool = false) {
         let rect = manager.inputStream(at: touch.location(in: self),
                                        previousPoint: touch.previousLocation(in: self),
@@ -236,7 +229,7 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !isWritingMode {
-            hideMenu()
+            display(node: nil)
             isWritingMode = true
         }
         register(touch: touches.first!)
@@ -257,20 +250,22 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     // MARK: - Target action
     
     @objc private func tapAction(_ sender: UITapGestureRecognizer) {
-        hideMenu()
-        guard let node = selectNode(at: sender.location(in: self)) else { return }
-        showMenu(for: node)
+        let node = manager.selectNode(at: sender.location(in: self))
+        
+        display(node: node)
+        delegate?.mathInputView(self, didTap: ObjCNode(node: node))
     }
     
     @objc private func longPressAction(_ sender: UILongPressGestureRecognizer) {
-        hideMenu()
-        guard let node = selectNode(at: sender.location(in: self)) else { return }
-        showCursor(for: node)
+        let node = manager.selectNode(at: sender.location(in: self))
+        
+        display(node: node)
+        delegate?.mathInputView(self, didLongPress: ObjCNode(node: node))
     }
     
     @IBAction open func undoAction(_ sender: UIButton?) {
         if !isWritingMode {
-            hideMenu()
+            display(node: nil)
             isWritingMode = true
         }
         if let rect = manager.undo() {
@@ -280,7 +275,7 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     
     @IBAction open func redoAction(_ sender: UIButton?) {
         if !isWritingMode {
-            hideMenu()
+            display(node: nil)
             isWritingMode = true
         }
         if let rect = manager.redo() {
@@ -288,23 +283,30 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
         }
     }
     
-    @IBAction open func removeAction(_ sender: UIButton?) {
-        hideMenu()
+    open func removeSelection() {
+        guard let node = manager.removeSelectedNode() else { return }
         
-        if let rect = manager.removeSelectedNode() {
-            setNeedsDisplay(rect)
-        }
+        display(node: nil)
+        setNeedsDisplay(node.frame)
+        delegate?.mathInputView(self, didRemove: ObjCNode(node: node)!)
     }
     
-    @IBAction open func replaceAction(_ sender: UIButton?) {
-        replace(with: Character(sender!.titleLabel!.text!))
+    open func replaceSelection(with character: Character) {
+        guard let node = manager.replaceSelectedNode(with: character) else { return }
+        
+        display(node: nil)
+        setNeedsDisplay(node.1.frame)
+        delegate?.mathInputView(self, didReplace: ObjCNode(node: node.0)!, with: ObjCNode(node: node.1)!)
     }
     
-    open func replace(with character: Character) {
-        hideMenu()
-        
-        if let rect = manager.replaceSelectedNode(with: character) {
-            setNeedsDisplay(rect)
+    // MARK: - Keyboard
+    
+    open func keyboard(_ keyboard: KeyboardType, didReceive input: String?) {
+        if let input = input {
+            guard input.characters.count == 1 else { return }
+            replaceSelection(with: Character(input))
+        } else {
+            removeSelection()
         }
     }
     
@@ -321,4 +323,5 @@ open class MathInputView: UIView, MathInkManagerDelegate, MathInkManagerDataSour
     open func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool)) {
         
     }
+    
 }

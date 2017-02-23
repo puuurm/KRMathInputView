@@ -14,3 +14,17 @@ public struct Node {
     let candidates: [String]
 }
 
+@objc open class ObjCNode: NSObject {
+    open var frame: CGRect
+    open var candidates: [String]
+    
+    public init(frame: CGRect, candidates: [String]) {
+        self.frame = frame
+        self.candidates = candidates
+    }
+    
+    public convenience init?(node: Node?) {
+        guard let node = node else { return nil }
+        self.init(frame: node.frame, candidates: node.candidates)
+    }
+}
