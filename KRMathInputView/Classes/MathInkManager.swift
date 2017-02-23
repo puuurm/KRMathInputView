@@ -34,7 +34,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             if let inkInstance = inkInstance as? Ink {
                 ink.append(inkInstance)
                 
-                if let rInk = inkInstance as? ReplacementInk {
+                if let rInk = inkInstance as? CharacterInk {
                     arrIndexSet.append(rInk.replacedIndexes)
                 }
             } else {
@@ -225,7 +225,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         process()
         
-        return Node(ink: ink, frame: padded(rect: frame), candidates: node.candidates)
+        return Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates)
     }
     
     internal func replaceSelectedNode(with character: Character) -> (Node, Node)? {
@@ -234,17 +234,17 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         let node = nodes[indexOfSelectedNode!]
         let (arrInk, frame) = getInk(for: node.indexes)
         
-        let replacementInk = ReplacementInk(character: character,
-                                         replacedIndexes: Set(node.indexes),
-                                         frame: frame)
-        add(ink: replacementInk)
+        let charInk = CharacterInk(character: character,
+                                   replacedIndexes: Set(node.indexes),
+                                   frame: frame)
+        add(ink: charInk)
 
         indexOfSelectedNode = nil
         
         process()
         
         return (Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates),
-                Node(ink: [replacementInk], frame: padded(rect: frame), candidates: [String(character)]))
+                Node(ink: [charInk], frame: padded(rect: frame), candidates: [String(character)]))
     }
     
     // MARK: - MathInkParser delegate
