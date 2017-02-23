@@ -1,7 +1,5 @@
 PODS:
-  - KRMathInputView (0.1.0):
-    - KRStackView (~> 0.4.1)
-  - KRStackView (0.4.1)
+  - KRMathInputView (0.2.0)
 
 DEPENDENCIES:
   - KRMathInputView (from `../`)
@@ -11,8 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  KRMathInputView: bd40e2f55d3e79f7da9bd2f9f445aa2bb1a001ec
-  KRStackView: ce56894f8c5aadaeea622f6cb8720c0a14e8c555
+  KRMathInputView: 4544eda3e6855f830dfc9684daafad94ca889827
 
 PODFILE CHECKSUM: ed6d6e8a523c443513a0225646946fa4ad9d16bd
 

@@ -7,117 +7,83 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		105719682BCCC51496B216FC951C3652 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF00BC826F324FE4774340C4CB401F59 /* Foundation.framework */; };
-		212D3C6CCDFE8C15907BFC86E7366AA4 /* MathInkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEDC2A19D382CF65A1EC28C65C2E855 /* MathInkManager.swift */; };
-		3F297A167481E4B635F3D954276CB886 /* Ink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153750DED099E29EB91534142DBAE49D /* Ink.swift */; };
-		54A43081411B942D7D53C094E199F933 /* InkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F509E01CA2C5EBBDED5C254D606840D1 /* InkParser.swift */; };
-		5AFE6D2C1ED986487DA9010F34344221 /* TerminalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6990A60940C69208F31F0A00B59B77BC /* TerminalNode.swift */; };
-		62B1E54A020A1F89E56CA949797C8CD3 /* KRStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EE2FDA1688E5C90CECCD8778325707 /* KRStackView.swift */; };
-		630EABBA1906DFC26227F40AD2F61812 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF00BC826F324FE4774340C4CB401F59 /* Foundation.framework */; };
-		7512FCA13D26941CEB231C0BAD2823EE /* KRStackView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D147F73D100B880EB6A4E25FF8016145 /* KRStackView-dummy.m */; };
+		017D6E8C392F56F3789B477467BB664C /* Ink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4793012AA7D6561AB6970370D407ED /* Ink.swift */; };
+		0D753B5E5B7D7AB0DEB4D313DE50D0AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		105719682BCCC51496B216FC951C3652 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		27C634B75B6A79B5769B476631AFD4AB /* KRMathInputView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C6DC620F41FB19E3ABF4C0FCD70AC882 /* KRMathInputView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3085D6A92BE444432CBD68F62D28DD3D /* MathInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FEC51EE894B852B910558D87D7FFD7 /* MathInputView.swift */; };
+		333D3637BC7A69961C296905784BB39F /* Pods-KRMathInputView_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8198354847B6E3CD7F65025B61C6E9B5 /* Pods-KRMathInputView_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3F27A2F42909A638FEA304D3E24AA904 /* Pods-KRMathInputView_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DE37FB038E4F32D5B94BAA957EEB3FBA /* Pods-KRMathInputView_Example-dummy.m */; };
+		4B50D3D6E54BED098531BB2A737A0BAE /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227A6AAF4AA64C87EA64280A5243DAF /* Keyboard.swift */; };
+		77DA497B211BA12E7AB23E6F19B5BA04 /* InkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4139447E881732BA8C6DD7F9F55E3E /* InkParser.swift */; };
 		7E38A9C0BB30CEEB49D121AAA8405E7A /* Pods-KRMathInputView_ExampleTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 22CA2230FAD73B0C543430AC02DDBCB0 /* Pods-KRMathInputView_ExampleTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		93020E1AFCDAB47DB70B3F210754A115 /* Pods-KRMathInputView_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8198354847B6E3CD7F65025B61C6E9B5 /* Pods-KRMathInputView_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9E78F5BD46F157C9AA23D0DE67BC033B /* Pods-KRMathInputView_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DE37FB038E4F32D5B94BAA957EEB3FBA /* Pods-KRMathInputView_Example-dummy.m */; };
-		AE15AE656F05F23EC8013F595BEEDC08 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF00BC826F324FE4774340C4CB401F59 /* Foundation.framework */; };
-		B366FCF227F2070AC07CECC18B42C97D /* UIColor+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF25AA977706689C9AD9061EEEA0F4F /* UIColor+Convenience.swift */; };
-		CA64D1193A6A4933A34EEC0ABEAE939C /* KRStackView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C793D8290476633509F4819F5E73B3C /* KRStackView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D9292C7E16CC333260B5E91B009AE878 /* KRStackView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE273404BB2ECE95B3473078E9D3D61 /* KRStackView.framework */; };
+		A7338988014AC4BC21B0B18C22114C0C /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D46CA3273BFAA470A5911A4080AD3A /* Node.swift */; };
+		CBC916632FE3E9858AE89ED12C60C86B /* TerminalNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91DA067F18F36ABD3AD2F99E16F54E9 /* TerminalNode.swift */; };
+		D603774340227D8D7A85FCF9A1C3C997 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		E4753DA19DD2B9D5E4D230047C8F4573 /* Pods-KRMathInputView_ExampleTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A3A07783809F0329AB9C077FF54234 /* Pods-KRMathInputView_ExampleTests-dummy.m */; };
-		E4F103C20D016D580AFB57AF2EB22F35 /* KRMathInputView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1232C096C771B3FED931654B11B89910 /* KRMathInputView-dummy.m */; };
-		E67C091262FD35B200AE2078468CCDB7 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA345F6F6B9D7ACF2F8085C1EE2E0A7A /* Node.swift */; };
-		EB0460E80C1826821652F990304FFEE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF00BC826F324FE4774340C4CB401F59 /* Foundation.framework */; };
-		F8C84F17C675755360F1A81C11C6AF0A /* KRMathInputView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C6DC620F41FB19E3ABF4C0FCD70AC882 /* KRMathInputView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF09788766001E1779B3E0CE7854C150 /* MathInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF7E60D8DBFF1BAAA7BA28BC55ED1F2 /* MathInputView.swift */; };
+		E5C17AF4721D448BC5A16347C76923E4 /* MathInkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A60663FF08D87CE41885F60A2337E1 /* MathInkManager.swift */; };
+		EE6DC9FB8C8DC0A2E1CEDA232799E691 /* UIColor+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A228CC4C7BCC6E312255E478D81075AF /* UIColor+Convenience.swift */; };
+		EE83827DC3C7BA972E1FCB41C280BD38 /* KRMathInputView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1232C096C771B3FED931654B11B89910 /* KRMathInputView-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		116BE54958837F425D1ADF462C578D26 /* PBXContainerItemProxy */ = {
+		A4E4F609AA67A9EA132D59A73343B9E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 728F54E95A6AB21973A1FCD32B59A309;
-			remoteInfo = KRStackView;
-		};
-		7B4F03E9BDA0B74BF70978BCA2397B6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 728F54E95A6AB21973A1FCD32B59A309;
-			remoteInfo = KRStackView;
-		};
-		CF3A31ED2DD41411840425E14992EDD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0AA78FD1FD7F843BA3B8021255A5B6B0;
+			remoteGlobalIDString = 82B298B69A0619C235FE92F81090D3DD;
 			remoteInfo = KRMathInputView;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09FDEF5E927DE5BE60C9BFA55AF31C34 /* KRStackView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KRStackView-prefix.pch"; sourceTree = "<group>"; };
 		0BB63E1A874114C0136AB7275A967539 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		10EE2FDA1688E5C90CECCD8778325707 /* KRStackView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KRStackView.swift; path = KRStackView/Classes/KRStackView.swift; sourceTree = "<group>"; };
 		1144F86224F777040A8268B28AE95CCB /* Pods-KRMathInputView_ExampleTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-KRMathInputView_ExampleTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		1232C096C771B3FED931654B11B89910 /* KRMathInputView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KRMathInputView-dummy.m"; sourceTree = "<group>"; };
-		153750DED099E29EB91534142DBAE49D /* Ink.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Ink.swift; sourceTree = "<group>"; };
-		1D21A725D06BB0D559172D5EC497EDA8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FD679552D3F819BA0D496C155646BFC /* KRMathInputView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = KRMathInputView.modulemap; sourceTree = "<group>"; };
 		22CA2230FAD73B0C543430AC02DDBCB0 /* Pods-KRMathInputView_ExampleTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-KRMathInputView_ExampleTests-umbrella.h"; sourceTree = "<group>"; };
 		24A6863D1BDA570A32541D1A4489370F /* Pods-KRMathInputView_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-KRMathInputView_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		275AD4BD1C484B2EA1C10F9D882B7508 /* Pods_KRMathInputView_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_KRMathInputView_ExampleTests.framework; path = "Pods-KRMathInputView_ExampleTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E092BBC9861C9E3D54ED5CC7AA12158 /* Pods-KRMathInputView_ExampleTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-KRMathInputView_ExampleTests-frameworks.sh"; sourceTree = "<group>"; };
-		2FEDC2A19D382CF65A1EC28C65C2E855 /* MathInkManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MathInkManager.swift; sourceTree = "<group>"; };
+		30DCB92F9D1B9A41742432872B1C595A /* KRMathInputView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KRMathInputView.framework; path = KRMathInputView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		394171AF97CB373AE574F83F3109FEE3 /* KRMathInputView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KRMathInputView.xcconfig; sourceTree = "<group>"; };
-		3C793D8290476633509F4819F5E73B3C /* KRStackView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KRStackView-umbrella.h"; sourceTree = "<group>"; };
 		44638CBEA5871CCD1194C74E4C8A4818 /* Pods-KRMathInputView_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-KRMathInputView_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		508A6F4D842C79674E17E36E599C3A7B /* KRStackView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = KRStackView.modulemap; sourceTree = "<group>"; };
+		4FADBF94720ABDF2C2366427F9C24A9E /* Pods_KRMathInputView_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_KRMathInputView_ExampleTests.framework; path = "Pods-KRMathInputView_ExampleTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60FAD839A1714B26429E2BFAC19803DB /* Pods_KRMathInputView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_KRMathInputView_Example.framework; path = "Pods-KRMathInputView_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A3A07783809F0329AB9C077FF54234 /* Pods-KRMathInputView_ExampleTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-KRMathInputView_ExampleTests-dummy.m"; sourceTree = "<group>"; };
 		65E8F375F6CC224F64BBC9358B622C2E /* Pods-KRMathInputView_ExampleTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-KRMathInputView_ExampleTests.modulemap"; sourceTree = "<group>"; };
-		6990A60940C69208F31F0A00B59B77BC /* TerminalNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TerminalNode.swift; sourceTree = "<group>"; };
-		74280E7BE0A7B59336F6DCBEB5C18D06 /* KRMathInputView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KRMathInputView.framework; path = KRMathInputView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7AB18D5A9C35B06FFCFDAD19F4AD0441 /* Pods_KRMathInputView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_KRMathInputView_Example.framework; path = "Pods-KRMathInputView_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E4139447E881732BA8C6DD7F9F55E3E /* InkParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InkParser.swift; sourceTree = "<group>"; };
 		8198354847B6E3CD7F65025B61C6E9B5 /* Pods-KRMathInputView_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-KRMathInputView_Example-umbrella.h"; sourceTree = "<group>"; };
-		8FF7E60D8DBFF1BAAA7BA28BC55ED1F2 /* MathInputView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MathInputView.swift; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9811EFAD3245B27AD350A214293CAF37 /* KRMathInputView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KRMathInputView-prefix.pch"; sourceTree = "<group>"; };
-		9CF25AA977706689C9AD9061EEEA0F4F /* UIColor+Convenience.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+Convenience.swift"; sourceTree = "<group>"; };
 		9F805F07245CEB07ACD6961E953E433C /* Pods-KRMathInputView_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-KRMathInputView_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		9FF105C90ED2E9D0A72AFB3743001F44 /* KRStackView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KRStackView.xcconfig; sourceTree = "<group>"; };
+		A228CC4C7BCC6E312255E478D81075AF /* UIColor+Convenience.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+Convenience.swift"; sourceTree = "<group>"; };
+		A3FEC51EE894B852B910558D87D7FFD7 /* MathInputView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MathInputView.swift; sourceTree = "<group>"; };
+		A7A60663FF08D87CE41885F60A2337E1 /* MathInkManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MathInkManager.swift; sourceTree = "<group>"; };
 		AB26F87EE21D576DAE89A688533AD5D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC4793012AA7D6561AB6970370D407ED /* Ink.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Ink.swift; sourceTree = "<group>"; };
+		B0D46CA3273BFAA470A5911A4080AD3A /* Node.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		BC5CC8A02A01655B50C4E3089CA4A47A /* Pods-KRMathInputView_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-KRMathInputView_Example-frameworks.sh"; sourceTree = "<group>"; };
 		C363CAA506859CA26A7CE126BD29D4E6 /* Pods-KRMathInputView_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-KRMathInputView_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		C6DC620F41FB19E3ABF4C0FCD70AC882 /* KRMathInputView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KRMathInputView-umbrella.h"; sourceTree = "<group>"; };
-		D147F73D100B880EB6A4E25FF8016145 /* KRStackView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KRStackView-dummy.m"; sourceTree = "<group>"; };
+		C91DA067F18F36ABD3AD2F99E16F54E9 /* TerminalNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TerminalNode.swift; sourceTree = "<group>"; };
+		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D3A65CB9D11B58EF94467086CCFB4ECA /* Pods-KRMathInputView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-KRMathInputView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		D3F57993CDBA956507405092A90A5057 /* Pods-KRMathInputView_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-KRMathInputView_Example-resources.sh"; sourceTree = "<group>"; };
-		DB64B34038575CFB19AA2703187AF679 /* KRStackView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KRStackView.framework; path = KRStackView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBD136B26EBF844CD9D75D88E3A9BA13 /* Pods-KRMathInputView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-KRMathInputView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		DE258425CFF7F8F83C64B9C0B4368A15 /* Pods-KRMathInputView_ExampleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-KRMathInputView_ExampleTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		DE37FB038E4F32D5B94BAA957EEB3FBA /* Pods-KRMathInputView_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-KRMathInputView_Example-dummy.m"; sourceTree = "<group>"; };
-		DF00BC826F324FE4774340C4CB401F59 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E6DA2F2C65C678241D866B8F6F5A5690 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA345F6F6B9D7ACF2F8085C1EE2E0A7A /* Node.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		EFE273404BB2ECE95B3473078E9D3D61 /* KRStackView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KRStackView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F509E01CA2C5EBBDED5C254D606840D1 /* InkParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InkParser.swift; sourceTree = "<group>"; };
+		F227A6AAF4AA64C87EA64280A5243DAF /* Keyboard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		FCD199702623854F6E327FB606F9520A /* Pods-KRMathInputView_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-KRMathInputView_Example.modulemap"; sourceTree = "<group>"; };
 		FF6D807F26170899717E1A5C193A39B1 /* Pods-KRMathInputView_ExampleTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-KRMathInputView_ExampleTests-resources.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		027A6643C51ABD8E08CD2A82539A808E /* Frameworks */ = {
+		5211422655D71C18B9A20F487EA15E2E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				630EABBA1906DFC26227F40AD2F61812 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		81AA4007A5E9C03CC79803F40070F571 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EB0460E80C1826821652F990304FFEE2 /* Foundation.framework in Frameworks */,
+				0D753B5E5B7D7AB0DEB4D313DE50D0AE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,27 +95,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F7DE10A5A6AD1142A06DF6CC95DCE654 /* Frameworks */ = {
+		F93C19C2C9E3244A83505BD14684F7E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE15AE656F05F23EC8013F595BEEDC08 /* Foundation.framework in Frameworks */,
-				D9292C7E16CC333260B5E91B009AE878 /* KRStackView.framework in Frameworks */,
+				D603774340227D8D7A85FCF9A1C3C997 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3DCC1C695A6CE720D3CBD72B646FBA74 /* Products */ = {
+		1AB64961D9614501835A366D1CA6D95C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				74280E7BE0A7B59336F6DCBEB5C18D06 /* KRMathInputView.framework */,
-				DB64B34038575CFB19AA2703187AF679 /* KRStackView.framework */,
-				7AB18D5A9C35B06FFCFDAD19F4AD0441 /* Pods_KRMathInputView_Example.framework */,
-				275AD4BD1C484B2EA1C10F9D882B7508 /* Pods_KRMathInputView_ExampleTests.framework */,
+				AC4793012AA7D6561AB6970370D407ED /* Ink.swift */,
+				B0D46CA3273BFAA470A5911A4080AD3A /* Node.swift */,
+				C91DA067F18F36ABD3AD2F99E16F54E9 /* TerminalNode.swift */,
 			);
-			name = Products;
+			name = Model;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49B5E30C6909E334EB0A619DA763EA5D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6E4139447E881732BA8C6DD7F9F55E3E /* InkParser.swift */,
+				F227A6AAF4AA64C87EA64280A5243DAF /* Keyboard.swift */,
+				A7A60663FF08D87CE41885F60A2337E1 /* MathInkManager.swift */,
+				A3FEC51EE894B852B910558D87D7FFD7 /* MathInputView.swift */,
+				A228CC4C7BCC6E312255E478D81075AF /* UIColor+Convenience.swift */,
+				1AB64961D9614501835A366D1CA6D95C /* Model */,
+			);
+			name = Classes;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		51DCF961DC0401E6D218BA7DCF6C6E2B /* Development Pods */ = {
@@ -158,15 +137,6 @@
 				F19753117378C42F46A2942B0183A89B /* KRMathInputView */,
 			);
 			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		569E7F0779748F76E8B4AF3DC7953B7E /* KRMathInputView */ = {
-			isa = PBXGroup;
-			children = (
-				F23C76CA9F24EE15D9B8E291F34E3F33 /* Classes */,
-			);
-			name = KRMathInputView;
-			path = KRMathInputView;
 			sourceTree = "<group>";
 		};
 		5A4CFD36C385C4EFB7762843ADAC5AB1 /* Support Files */ = {
@@ -183,14 +153,12 @@
 			path = "Example/Pods/Target Support Files/KRMathInputView";
 			sourceTree = "<group>";
 		};
-		6C7106D7F95E08E3F6DBB1E7F49D9F09 /* KRStackView */ = {
+		7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				10EE2FDA1688E5C90CECCD8778325707 /* KRStackView.swift */,
-				8B5CDC5A844972887A1BC1622C018FFE /* Support Files */,
+				CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */,
 			);
-			name = KRStackView;
-			path = KRStackView;
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -198,36 +166,10 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				51DCF961DC0401E6D218BA7DCF6C6E2B /* Development Pods */,
-				C756E15DFA315CDEFD91DBA149A93940 /* Frameworks */,
-				EAAC8C2AF5B6A9467603DCDF9655C887 /* Pods */,
-				3DCC1C695A6CE720D3CBD72B646FBA74 /* Products */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				ED6B0DCD56AB5AB88D605D142F365D99 /* Products */,
 				910DB47672416DCF47EF0BDC615209E1 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		8B5CDC5A844972887A1BC1622C018FFE /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				1D21A725D06BB0D559172D5EC497EDA8 /* Info.plist */,
-				508A6F4D842C79674E17E36E599C3A7B /* KRStackView.modulemap */,
-				9FF105C90ED2E9D0A72AFB3743001F44 /* KRStackView.xcconfig */,
-				D147F73D100B880EB6A4E25FF8016145 /* KRStackView-dummy.m */,
-				09FDEF5E927DE5BE60C9BFA55AF31C34 /* KRStackView-prefix.pch */,
-				3C793D8290476633509F4819F5E73B3C /* KRStackView-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/KRStackView";
-			sourceTree = "<group>";
-		};
-		8D89F52B48736E5BE9D04B2E742047E0 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				153750DED099E29EB91534142DBAE49D /* Ink.swift */,
-				EA345F6F6B9D7ACF2F8085C1EE2E0A7A /* Node.swift */,
-				6990A60940C69208F31F0A00B59B77BC /* TerminalNode.swift */,
-			);
-			name = Model;
-			path = Model;
 			sourceTree = "<group>";
 		};
 		910DB47672416DCF47EF0BDC615209E1 /* Targets Support Files */ = {
@@ -237,6 +179,15 @@
 				AE81C35C83095532F2A6FE2835682C8C /* Pods-KRMathInputView_ExampleTests */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		9EBC3E9D15F2EC19FB6A89AEE82CD2E0 /* KRMathInputView */ = {
+			isa = PBXGroup;
+			children = (
+				49B5E30C6909E334EB0A619DA763EA5D /* Classes */,
+			);
+			name = KRMathInputView;
+			path = KRMathInputView;
 			sourceTree = "<group>";
 		};
 		AE81C35C83095532F2A6FE2835682C8C /* Pods-KRMathInputView_ExampleTests */ = {
@@ -257,19 +208,10 @@
 			path = "Target Support Files/Pods-KRMathInputView_ExampleTests";
 			sourceTree = "<group>";
 		};
-		B481987054666B04A73DD98E1F48B8CE /* iOS */ = {
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DF00BC826F324FE4774340C4CB401F59 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		C756E15DFA315CDEFD91DBA149A93940 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EFE273404BB2ECE95B3473078E9D3D61 /* KRStackView.framework */,
-				B481987054666B04A73DD98E1F48B8CE /* iOS */,
+				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -292,53 +234,34 @@
 			path = "Target Support Files/Pods-KRMathInputView_Example";
 			sourceTree = "<group>";
 		};
-		EAAC8C2AF5B6A9467603DCDF9655C887 /* Pods */ = {
+		ED6B0DCD56AB5AB88D605D142F365D99 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6C7106D7F95E08E3F6DBB1E7F49D9F09 /* KRStackView */,
+				30DCB92F9D1B9A41742432872B1C595A /* KRMathInputView.framework */,
+				60FAD839A1714B26429E2BFAC19803DB /* Pods_KRMathInputView_Example.framework */,
+				4FADBF94720ABDF2C2366427F9C24A9E /* Pods_KRMathInputView_ExampleTests.framework */,
 			);
-			name = Pods;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		F19753117378C42F46A2942B0183A89B /* KRMathInputView */ = {
 			isa = PBXGroup;
 			children = (
-				569E7F0779748F76E8B4AF3DC7953B7E /* KRMathInputView */,
+				9EBC3E9D15F2EC19FB6A89AEE82CD2E0 /* KRMathInputView */,
 				5A4CFD36C385C4EFB7762843ADAC5AB1 /* Support Files */,
 			);
 			name = KRMathInputView;
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		F23C76CA9F24EE15D9B8E291F34E3F33 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				F509E01CA2C5EBBDED5C254D606840D1 /* InkParser.swift */,
-				2FEDC2A19D382CF65A1EC28C65C2E855 /* MathInkManager.swift */,
-				8FF7E60D8DBFF1BAAA7BA28BC55ED1F2 /* MathInputView.swift */,
-				9CF25AA977706689C9AD9061EEEA0F4F /* UIColor+Convenience.swift */,
-				8D89F52B48736E5BE9D04B2E742047E0 /* Model */,
-			);
-			name = Classes;
-			path = Classes;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		1375D06730328B249F10E3B16FA835C9 /* Headers */ = {
+		91361CD6BE27A785EB7AB38C5448882A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8C84F17C675755360F1A81C11C6AF0A /* KRMathInputView-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E86FB0D64B1B4C70499A203A130AE97 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CA64D1193A6A4933A34EEC0ABEAE939C /* KRStackView-umbrella.h in Headers */,
+				27C634B75B6A79B5769B476631AFD4AB /* KRMathInputView-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,69 +273,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A33D2785FEF3782AE36BCD61EB895570 /* Headers */ = {
+		E90C1500451A6BFB478724A84F30660B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93020E1AFCDAB47DB70B3F210754A115 /* Pods-KRMathInputView_Example-umbrella.h in Headers */,
+				333D3637BC7A69961C296905784BB39F /* Pods-KRMathInputView_Example-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		0AA78FD1FD7F843BA3B8021255A5B6B0 /* KRMathInputView */ = {
+		6B0449AC0E3A049E6435FD39EBCEA885 /* Pods-KRMathInputView_Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 246217673BADEE9BE8CC335AAE17D1CE /* Build configuration list for PBXNativeTarget "KRMathInputView" */;
+			buildConfigurationList = 02F51A055180B5E48A42850B38267B7F /* Build configuration list for PBXNativeTarget "Pods-KRMathInputView_Example" */;
 			buildPhases = (
-				F995648CD007447948C053715385B5FF /* Sources */,
-				F7DE10A5A6AD1142A06DF6CC95DCE654 /* Frameworks */,
-				1375D06730328B249F10E3B16FA835C9 /* Headers */,
+				5612B74CA98827DF2D0DACBD47855030 /* Sources */,
+				F93C19C2C9E3244A83505BD14684F7E4 /* Frameworks */,
+				E90C1500451A6BFB478724A84F30660B /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0E2FECB1F96AD32153E4A004DBDADF1B /* PBXTargetDependency */,
-			);
-			name = KRMathInputView;
-			productName = KRMathInputView;
-			productReference = 74280E7BE0A7B59336F6DCBEB5C18D06 /* KRMathInputView.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		728F54E95A6AB21973A1FCD32B59A309 /* KRStackView */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FB4CFF1017F5CBA4A0EEC8F22488E327 /* Build configuration list for PBXNativeTarget "KRStackView" */;
-			buildPhases = (
-				D67464AAA537F97026CD6662CE66D861 /* Sources */,
-				81AA4007A5E9C03CC79803F40070F571 /* Frameworks */,
-				5E86FB0D64B1B4C70499A203A130AE97 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = KRStackView;
-			productName = KRStackView;
-			productReference = DB64B34038575CFB19AA2703187AF679 /* KRStackView.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		97016C1C8A1267912BFEF7004BF3C9AC /* Pods-KRMathInputView_Example */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 074E1033705B1B4E00A7C7B0AC9FED90 /* Build configuration list for PBXNativeTarget "Pods-KRMathInputView_Example" */;
-			buildPhases = (
-				73E5DA82AE260A724CAB4E0FB57B0AF1 /* Sources */,
-				027A6643C51ABD8E08CD2A82539A808E /* Frameworks */,
-				A33D2785FEF3782AE36BCD61EB895570 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E224CC0920D8419AE3C9BA6CEAFE7A11 /* PBXTargetDependency */,
-				A90A20E64C7FAFEEE767ECFE9C25CBB2 /* PBXTargetDependency */,
+				9814400345298AFF46E071F445DFF3AD /* PBXTargetDependency */,
 			);
 			name = "Pods-KRMathInputView_Example";
 			productName = "Pods-KRMathInputView_Example";
-			productReference = 7AB18D5A9C35B06FFCFDAD19F4AD0441 /* Pods_KRMathInputView_Example.framework */;
+			productReference = 60FAD839A1714B26429E2BFAC19803DB /* Pods_KRMathInputView_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		82B298B69A0619C235FE92F81090D3DD /* KRMathInputView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DEEA0D9E9B2FD95EB3064CA67C3F0150 /* Build configuration list for PBXNativeTarget "KRMathInputView" */;
+			buildPhases = (
+				5AAE8C044594B4FD92983FAB77349F5D /* Sources */,
+				5211422655D71C18B9A20F487EA15E2E /* Frameworks */,
+				91361CD6BE27A785EB7AB38C5448882A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KRMathInputView;
+			productName = KRMathInputView;
+			productReference = 30DCB92F9D1B9A41742432872B1C595A /* KRMathInputView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		A8DDF19652BA4B3DE4E5FC17ED379B21 /* Pods-KRMathInputView_ExampleTests */ = {
@@ -429,7 +333,7 @@
 			);
 			name = "Pods-KRMathInputView_ExampleTests";
 			productName = "Pods-KRMathInputView_ExampleTests";
-			productReference = 275AD4BD1C484B2EA1C10F9D882B7508 /* Pods_KRMathInputView_ExampleTests.framework */;
+			productReference = 4FADBF94720ABDF2C2366427F9C24A9E /* Pods_KRMathInputView_ExampleTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -449,48 +353,39 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 3DCC1C695A6CE720D3CBD72B646FBA74 /* Products */;
+			productRefGroup = ED6B0DCD56AB5AB88D605D142F365D99 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0AA78FD1FD7F843BA3B8021255A5B6B0 /* KRMathInputView */,
-				728F54E95A6AB21973A1FCD32B59A309 /* KRStackView */,
-				97016C1C8A1267912BFEF7004BF3C9AC /* Pods-KRMathInputView_Example */,
+				82B298B69A0619C235FE92F81090D3DD /* KRMathInputView */,
+				6B0449AC0E3A049E6435FD39EBCEA885 /* Pods-KRMathInputView_Example */,
 				A8DDF19652BA4B3DE4E5FC17ED379B21 /* Pods-KRMathInputView_ExampleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		73E5DA82AE260A724CAB4E0FB57B0AF1 /* Sources */ = {
+		5612B74CA98827DF2D0DACBD47855030 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E78F5BD46F157C9AA23D0DE67BC033B /* Pods-KRMathInputView_Example-dummy.m in Sources */,
+				3F27A2F42909A638FEA304D3E24AA904 /* Pods-KRMathInputView_Example-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D67464AAA537F97026CD6662CE66D861 /* Sources */ = {
+		5AAE8C044594B4FD92983FAB77349F5D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7512FCA13D26941CEB231C0BAD2823EE /* KRStackView-dummy.m in Sources */,
-				62B1E54A020A1F89E56CA949797C8CD3 /* KRStackView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F995648CD007447948C053715385B5FF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3F297A167481E4B635F3D954276CB886 /* Ink.swift in Sources */,
-				54A43081411B942D7D53C094E199F933 /* InkParser.swift in Sources */,
-				E4F103C20D016D580AFB57AF2EB22F35 /* KRMathInputView-dummy.m in Sources */,
-				212D3C6CCDFE8C15907BFC86E7366AA4 /* MathInkManager.swift in Sources */,
-				FF09788766001E1779B3E0CE7854C150 /* MathInputView.swift in Sources */,
-				E67C091262FD35B200AE2078468CCDB7 /* Node.swift in Sources */,
-				5AFE6D2C1ED986487DA9010F34344221 /* TerminalNode.swift in Sources */,
-				B366FCF227F2070AC07CECC18B42C97D /* UIColor+Convenience.swift in Sources */,
+				017D6E8C392F56F3789B477467BB664C /* Ink.swift in Sources */,
+				77DA497B211BA12E7AB23E6F19B5BA04 /* InkParser.swift in Sources */,
+				4B50D3D6E54BED098531BB2A737A0BAE /* Keyboard.swift in Sources */,
+				EE83827DC3C7BA972E1FCB41C280BD38 /* KRMathInputView-dummy.m in Sources */,
+				E5C17AF4721D448BC5A16347C76923E4 /* MathInkManager.swift in Sources */,
+				3085D6A92BE444432CBD68F62D28DD3D /* MathInputView.swift in Sources */,
+				A7338988014AC4BC21B0B18C22114C0C /* Node.swift in Sources */,
+				CBC916632FE3E9858AE89ED12C60C86B /* TerminalNode.swift in Sources */,
+				EE6DC9FB8C8DC0A2E1CEDA232799E691 /* UIColor+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,93 +400,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0E2FECB1F96AD32153E4A004DBDADF1B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KRStackView;
-			target = 728F54E95A6AB21973A1FCD32B59A309 /* KRStackView */;
-			targetProxy = 7B4F03E9BDA0B74BF70978BCA2397B6F /* PBXContainerItemProxy */;
-		};
-		A90A20E64C7FAFEEE767ECFE9C25CBB2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KRStackView;
-			target = 728F54E95A6AB21973A1FCD32B59A309 /* KRStackView */;
-			targetProxy = 116BE54958837F425D1ADF462C578D26 /* PBXContainerItemProxy */;
-		};
-		E224CC0920D8419AE3C9BA6CEAFE7A11 /* PBXTargetDependency */ = {
+		9814400345298AFF46E071F445DFF3AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = KRMathInputView;
-			target = 0AA78FD1FD7F843BA3B8021255A5B6B0 /* KRMathInputView */;
-			targetProxy = CF3A31ED2DD41411840425E14992EDD9 /* PBXContainerItemProxy */;
+			target = 82B298B69A0619C235FE92F81090D3DD /* KRMathInputView */;
+			targetProxy = A4E4F609AA67A9EA132D59A73343B9E1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1205DD29127FFAAE2B368AAA67209ABD /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9FF105C90ED2E9D0A72AFB3743001F44 /* KRStackView.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/KRStackView/KRStackView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/KRStackView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/KRStackView/KRStackView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = KRStackView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		24AD6BA18B0B6F08F5A3FF8D3AF8CA0F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9FF105C90ED2E9D0A72AFB3743001F44 /* KRStackView.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/KRStackView/KRStackView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/KRStackView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/KRStackView/KRStackView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = KRStackView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		6169565B8F3CA574222F052B733941B9 /* Debug */ = {
+		079BAE55BA5E3B48807CCD08127E1270 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 394171AF97CB373AE574F83F3109FEE3 /* KRMathInputView.xcconfig */;
 			buildSettings = {
@@ -599,7 +417,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -612,27 +430,26 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/KRMathInputView/KRMathInputView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = KRMathInputView;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		8D239B0AFE104184EA3B9C389D630E54 /* Release */ = {
+		16E34281AF36A19CDEF441FF30F7D829 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D3A65CB9D11B58EF94467086CCFB4ECA /* Pods-KRMathInputView_Example.release.xcconfig */;
+			baseConfigurationReference = DBD136B26EBF844CD9D75D88E3A9BA13 /* Pods-KRMathInputView_Example.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -645,7 +462,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-KRMathInputView_Example/Pods-KRMathInputView_Example.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -653,11 +470,12 @@
 				PRODUCT_NAME = Pods_KRMathInputView_Example;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		8DED8AD26D381A6ACFF202E5217EC498 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -743,41 +561,9 @@
 			};
 			name = Debug;
 		};
-		C98E1BA1CCC0E29035D5D4DEDA19F932 /* Release */ = {
+		B2EACFE54AA673B85A679203ADF24993 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 394171AF97CB373AE574F83F3109FEE3 /* KRMathInputView.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/KRMathInputView/KRMathInputView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/KRMathInputView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/KRMathInputView/KRMathInputView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = KRMathInputView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		D1B67FA5EE90A7286B363DFB7CA17CEA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DBD136B26EBF844CD9D75D88E3A9BA13 /* Pods-KRMathInputView_Example.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -790,21 +576,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-KRMathInputView_Example/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/KRMathInputView/KRMathInputView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KRMathInputView/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-KRMathInputView_Example/Pods-KRMathInputView_Example.modulemap";
+				MODULEMAP_FILE = "Target Support Files/KRMathInputView/KRMathInputView.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_KRMathInputView_Example;
+				PRODUCT_NAME = KRMathInputView;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -881,14 +664,49 @@
 			};
 			name = Release;
 		};
+		ECDD0E7E77A7520D012CDA5F26715376 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3A65CB9D11B58EF94467086CCFB4ECA /* Pods-KRMathInputView_Example.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-KRMathInputView_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-KRMathInputView_Example/Pods-KRMathInputView_Example.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_KRMathInputView_Example;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		074E1033705B1B4E00A7C7B0AC9FED90 /* Build configuration list for PBXNativeTarget "Pods-KRMathInputView_Example" */ = {
+		02F51A055180B5E48A42850B38267B7F /* Build configuration list for PBXNativeTarget "Pods-KRMathInputView_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D1B67FA5EE90A7286B363DFB7CA17CEA /* Debug */,
-				8D239B0AFE104184EA3B9C389D630E54 /* Release */,
+				16E34281AF36A19CDEF441FF30F7D829 /* Debug */,
+				ECDD0E7E77A7520D012CDA5F26715376 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -902,15 +720,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		246217673BADEE9BE8CC335AAE17D1CE /* Build configuration list for PBXNativeTarget "KRMathInputView" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6169565B8F3CA574222F052B733941B9 /* Debug */,
-				C98E1BA1CCC0E29035D5D4DEDA19F932 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -920,11 +729,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FB4CFF1017F5CBA4A0EEC8F22488E327 /* Build configuration list for PBXNativeTarget "KRStackView" */ = {
+		DEEA0D9E9B2FD95EB3064CA67C3F0150 /* Build configuration list for PBXNativeTarget "KRMathInputView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				24AD6BA18B0B6F08F5A3FF8D3AF8CA0F /* Debug */,
-				1205DD29127FFAAE2B368AAA67209ABD /* Release */,
+				B2EACFE54AA673B85A679203ADF24993 /* Debug */,
+				079BAE55BA5E3B48807CCD08127E1270 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
