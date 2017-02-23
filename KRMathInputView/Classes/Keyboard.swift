@@ -8,10 +8,10 @@
 
 import UIKit
 
-public protocol KeyboardType {
+public protocol KeyboardType: NSObjectProtocol {
     
-    weak var delegate: KeyboardTypeDelegate? { get }
-    weak var dataSource: KeyboardTypeDataSource? { get }
+    weak var delegate: KeyboardTypeDelegate? { get set }
+    weak var dataSource: KeyboardTypeDataSource? { get set }
     
     func showKeyboard(_ sender: Any?)
     func hideKeyboard(_ sender: Any?)
@@ -21,12 +21,12 @@ public protocol KeyboardType {
 
 public protocol KeyboardTypeDataSource: class {
     
-    func characters(for keyboard: KeyboardType) -> [Character]?
+    var selectedNodeCandidates: [String]? { get }
     
 }
 
 public protocol KeyboardTypeDelegate: class {
     
-    func keyboard(_ keyboard: KeyboardType, didReceive input: Character?)
+    func keyboard(_ keyboard: KeyboardType, didReceive input: String?)
     
 }

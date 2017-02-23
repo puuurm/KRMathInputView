@@ -191,7 +191,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return Node(ink: nodeInks[index], frame: nodeFrames[index], candidates: nodes[index].candidates)
     }
     
-    internal func removeSelectedNode() -> CGRect? {
+    internal func removeSelectedNode() -> Node? {
         guard indexOfSelectedNode != nil else { return nil }
         
         let node = nodes[indexOfSelectedNode!]
@@ -209,10 +209,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         process()
         
-        return padded(rect: frame)
+        return Node(ink: ink, frame: padded(rect: frame), candidates: node.candidates)
     }
     
-    internal func replaceSelectedNode(with character: Character) -> CGRect? {
+    internal func replaceSelectedNode(with character: Character) -> (Node, Node)? {
         guard indexOfSelectedNode != nil else { return nil }
 
         let node = nodes[indexOfSelectedNode!]
@@ -226,14 +226,16 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         inkIndex -= node.indexes.count
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
 
-        inkCache.insert(CharacterInk(character: character, frame: frame), at: inkIndex)
+        let charInk = CharacterInk(character: character, frame: frame)
+        inkCache.insert(charInk, at: inkIndex)
         inkIndex += 1
         
         indexOfSelectedNode = nil
         
         process()
         
-        return padded(rect: frame)
+        return (Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates),
+                Node(ink: [charInk], frame: padded(rect: frame), candidates: [String(character)]))
     }
     
     // MARK: - MathInkParser delegate
