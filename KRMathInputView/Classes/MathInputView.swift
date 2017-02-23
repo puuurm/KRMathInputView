@@ -37,6 +37,7 @@ open class MathInputView: UIView, ProtocolCollection {
             if !isWritingMode && newValue {
                 manager.selectNode(at: nil)
                 display(node: nil)
+                delegate?.mathInputView(self, didTap: nil)
             }
         }
         didSet {
@@ -235,10 +236,7 @@ open class MathInputView: UIView, ProtocolCollection {
     }
     
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !isWritingMode {
-            display(node: nil)
-            isWritingMode = true
-        }
+        if !isWritingMode { isWritingMode = true }
         register(touch: touches.first!)
     }
     
@@ -271,20 +269,14 @@ open class MathInputView: UIView, ProtocolCollection {
     }
     
     @IBAction open func undoAction(_ sender: UIButton?) {
-        if !isWritingMode {
-            display(node: nil)
-            isWritingMode = true
-        }
+        if !isWritingMode { isWritingMode = true }
         if let rect = manager.undo() {
             setNeedsDisplay(rect)
         }
     }
     
     @IBAction open func redoAction(_ sender: UIButton?) {
-        if !isWritingMode {
-            display(node: nil)
-            isWritingMode = true
-        }
+        if !isWritingMode { isWritingMode = true }
         if let rect = manager.redo() {
             setNeedsDisplay(rect)
         }
