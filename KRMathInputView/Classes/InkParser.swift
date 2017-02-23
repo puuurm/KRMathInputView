@@ -11,7 +11,7 @@ import Foundation
 @objc public protocol MathInkParserDelegate: NSObjectProtocol {
     func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, leafNodes: NSArray)
     func parser(_ parser: MathInkParser, didFailWith error: NSError)
-    func parser(_ parser: MathInkParser, didRemoveStrokeAt index: Int)
+    func parser(_ parser: MathInkParser, didRemoveStrokeAt indexes: [Int])
 }
 
 @objc public protocol MathInkParser {

@@ -280,7 +280,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         delegate?.manager(self, didParseTreeToLaTex: String(string))
     }
     
-    open func parser(_ parser: MathInkParser, didRemoveStrokeAt index: Int) {
+    open func parser(_ parser: MathInkParser, didRemoveStrokeAt indexes: [Int]) {
         // TODO: Implement
     }
     
