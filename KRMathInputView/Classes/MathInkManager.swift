@@ -186,7 +186,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             nodeInks.append(arrInk)
             nodeFrames.append(padded(rect: frame))
 
-            guard frame.contains(point) else { continue }
+            guard nodeFrames.last!.contains(point) else { continue }
             
             arrNodeIndexes.append(nodeIndex)
         }
