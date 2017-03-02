@@ -68,17 +68,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     public private(set) var nodes = [TerminalNodeType]()
     public private(set) var indexOfSelectedNode: Int?
     
-    // MARK: - Test
-    
-    public func test(with ink: [InkType], nodes: [TerminalNodeType]) {
-        self.inkCache = ink
-        self.nodes = nodes
-    }
-    
-    public func testSelectNode(at point: CGPoint) -> Node? {
-        return selectNode(at: point)
-    }
-    
     // MARK: - Ink
     
     private func getInk(for indexes: [Int]) -> (arrInk: [InkType], frame: CGRect)  {
@@ -104,7 +93,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         )
     }
     
-    internal func add(ink: InkType) {
+    public func add(ink: InkType) {
         if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
         
         inkCache.append(ink)
@@ -112,7 +101,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     }
     
     @discardableResult
-    internal func inputStream(at point: CGPoint, previousPoint: CGPoint, isLast: Bool = false) -> CGRect {
+    public func inputStream(at point: CGPoint, previousPoint: CGPoint, isLast: Bool = false) -> CGRect {
         func midPoint() -> CGPoint {
             return CGPoint(x: (point.x + previousPoint.x) * 0.5,
                            y: (point.y + previousPoint.y) * 0.5)
@@ -147,7 +136,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         }()
     }
     
-    internal func undo() -> CGRect? {
+    public func undo() -> CGRect? {
         guard canUndo else { return nil }
         inkIndex -= 1
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
@@ -156,7 +145,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return padded(rect: inkCache[inkIndex].frame)
     }
     
-    internal func redo() -> CGRect? {
+    public func redo() -> CGRect? {
         guard canRedo else { return nil }
         inkIndex += 1
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
@@ -165,7 +154,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return padded(rect: inkCache[inkIndex - 1].frame)
     }
     
-    internal func process() {
+    public func process() {
         guard let parser = parser else {
             // TODO: Define error
             delegate?.manager(self, didFailToParseWith: NSError(domain: "tempdomain", code: 0))
@@ -178,7 +167,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - Node
     
-    internal func selectNode(at point: CGPoint?) -> Node? {
+    public func selectNode(at point: CGPoint?) -> Node? {
         guard let point = point else {
             indexOfSelectedNode = nil
             return nil
@@ -219,7 +208,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return Node(ink: nodeInks[index], frame: nodeFrames[index], candidates: nodes[index].candidates)
     }
     
-    internal func removeSelectedNode() -> Node? {
+    public func removeSelectedNode() -> Node? {
         guard indexOfSelectedNode != nil else { return nil }
         
         let node = nodes[indexOfSelectedNode!]
@@ -236,7 +225,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates)
     }
     
-    internal func replaceSelectedNode(with character: Character) -> (Node, Node)? {
+    public func replaceSelectedNode(with character: Character) -> (Node, Node)? {
         guard indexOfSelectedNode != nil else { return nil }
 
         let node = nodes[indexOfSelectedNode!]
