@@ -29,7 +29,7 @@ open class MathInputView: UIView, ProtocolCollection {
     
     open weak var delegate: MathInputViewDelegate?
     
-    public var isWritingMode: Bool = true {
+    open var isWritingMode: Bool = true {
         willSet {
             tapGestureRecognizer.isEnabled = !newValue
             longPressGestureRecognizer.isEnabled = !newValue
@@ -64,24 +64,24 @@ open class MathInputView: UIView, ProtocolCollection {
         return manager.nodes[index].candidates
     }
     
-    public weak var candidatesView: KeyboardType? {
+    open weak var candidatesView: KeyboardType? {
         didSet {
             candidatesView?.delegate = self
             candidatesView?.dataSource = self
         }
     }
     
-    public weak var keyboardView: KeyboardType? {
+    open weak var keyboardView: KeyboardType? {
         didSet {
             keyboardView?.delegate = self
             keyboardView?.dataSource = self
         }
     }
     
-    private weak var selectedNodeLayer: CALayer?
+    public weak var selectedNodeLayer: CALayer?
     
-    private let tapGestureRecognizer = UITapGestureRecognizer()
-    private let longPressGestureRecognizer = UILongPressGestureRecognizer()
+    public let tapGestureRecognizer = UITapGestureRecognizer()
+    public let longPressGestureRecognizer = UILongPressGestureRecognizer()
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -136,7 +136,7 @@ open class MathInputView: UIView, ProtocolCollection {
     // MARK: - Private
     
     @discardableResult
-    private func selectNode(at point: CGPoint?) -> Node? {
+    open func selectNode(at point: CGPoint?) -> Node? {
         let node = manager.selectNode(at: point)
         display(node: node)
         return node
@@ -173,7 +173,7 @@ open class MathInputView: UIView, ProtocolCollection {
     
     // TODO: Add error handling
     @discardableResult
-    private func display(node: Node?) {
+    open func display(node: Node?) {
         selectedNodeLayer?.removeFromSuperlayer()
         candidatesView?.hideKeyboard(nil)
         
@@ -254,14 +254,14 @@ open class MathInputView: UIView, ProtocolCollection {
     
     // MARK: - Target action
     
-    @objc private func tapAction(_ sender: UITapGestureRecognizer) {
+    @objc open func tapAction(_ sender: UITapGestureRecognizer) {
         let node = manager.selectNode(at: sender.location(in: self))
         
         display(node: node)
         delegate?.mathInputView(self, didTap: ObjCNode(node: node))
     }
     
-    @objc private func longPressAction(_ sender: UILongPressGestureRecognizer) {
+    @objc open func longPressAction(_ sender: UILongPressGestureRecognizer) {
         let node = manager.selectNode(at: sender.location(in: self))
         
         display(node: node)

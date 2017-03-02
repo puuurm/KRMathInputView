@@ -9,9 +9,9 @@
 import UIKit
 
 public struct Node {
-    let ink: [InkType]
-    let frame: CGRect
-    let candidates: [String]
+    public let ink: [InkType]
+    public let frame: CGRect
+    public let candidates: [String]
 }
 
 @objc open class ObjCNode: NSObject {

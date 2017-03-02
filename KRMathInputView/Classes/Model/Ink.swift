@@ -76,15 +76,17 @@ public struct StrokeInk: Ink {
     
 }
 
-internal struct CharacterInk: Ink {
+public struct CharacterInk: Ink {
     
-    internal let character: Character
-    internal let replacedIndexes: Set<Int>
-    internal let frame: CGRect
+    public let character: Character
+    public let path: UIBezierPath
+    public let frame: CGRect
     
-    internal var objCType: NSObject {
+    public var objCType: NSObject {
         return CharacterInkValue(character: character, frame: frame)
     }
+    
+    internal let replacedIndexes: Set<Int>
     
 }
 

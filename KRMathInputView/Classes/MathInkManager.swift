@@ -233,9 +233,15 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
 
         let node = nodes[indexOfSelectedNode!]
         let (arrInk, frame) = getInk(for: node.indexes)
+        let path = arrInk.reduce(UIBezierPath()) { (path, ink) -> UIBezierPath in
+            path.append((ink as! StrokeInk).path)
+            path.lineWidth = dataSource!.lineWidth
+            return path
+        }
         
         let charInk = CharacterInk(character: character,
                                    replacedIndexes: Set(node.indexes),
+                                   path: path,
                                    frame: frame)
         add(ink: charInk)
 
