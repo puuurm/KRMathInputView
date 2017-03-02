@@ -88,6 +88,14 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return (arrInk, arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) })
     }
     
+    private func getPath(from inkArray: [InkType]) -> UIBezierPath {
+        return inkArray.reduce(UIBezierPath()) { (path, ink) -> UIBezierPath in
+            path.append(ink.path)
+            path.lineWidth = dataSource!.lineWidth
+            return path
+        }
+    }
+    
     private func padded(rect: CGRect) -> CGRect {
         return CGRect(x: rect.origin.x - padding,
                       y: rect.origin.y - padding,
@@ -217,7 +225,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         let node = nodes[indexOfSelectedNode!]
         let (arrInk, frame) = getInk(for: node.indexes)
         
-        add(ink: RemovedInk(indexes: Set(node.indexes), frame: frame))
+        add(ink: RemovedInk(indexes: Set(node.indexes), path: getPath(from: ink)))
         
         delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
         
@@ -233,16 +241,10 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
 
         let node = nodes[indexOfSelectedNode!]
         let (arrInk, frame) = getInk(for: node.indexes)
-        let path = arrInk.reduce(UIBezierPath()) { (path, ink) -> UIBezierPath in
-            path.append((ink as! StrokeInk).path)
-            path.lineWidth = dataSource!.lineWidth
-            return path
-        }
         
         let charInk = CharacterInk(character: character,
-                                   replacedIndexes: Set(node.indexes),
-                                   path: path,
-                                   frame: frame)
+                                   path: getPath(from: arrInk),
+                                   replacedIndexes: Set(node.indexes))
         add(ink: charInk)
 
         indexOfSelectedNode = nil

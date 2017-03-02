@@ -9,6 +9,7 @@
 import UIKit
 
 public protocol InkType {
+    var path: UIBezierPath { get }
     var frame: CGRect { get }
 }
 
@@ -80,7 +81,7 @@ public struct CharacterInk: Ink {
     
     public let character: Character
     public let path: UIBezierPath
-    public let frame: CGRect
+    public var frame: CGRect { return path.bounds }
     
     public var objCType: NSObject {
         return CharacterInkValue(character: character, frame: frame)
@@ -91,7 +92,8 @@ public struct CharacterInk: Ink {
 }
 
 internal struct RemovedInk: InkType {
-    let indexes: Set<Int>
-    let frame: CGRect
+    internal let indexes: Set<Int>
+    internal let path: UIBezierPath
+    var frame: CGRect { return path.bounds }
 }
 
