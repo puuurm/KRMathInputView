@@ -8,21 +8,17 @@
 
 import UIKit
 
-public protocol MathInkManagerDelegate: class {
-    func manager(_ manager: MathInkManager, didParseTreeToLaTex string: String)
-    func manager(_ manager: MathInkManager, didFailToParseWith error: NSError)
+public protocol MathInkRendering: class {
+    var nodePadding: CGFloat { get }
+    
+    func manager(_ manager: MathInkManager, didExtractLaTeX string: String)
+    func manager(_ manager: MathInkManager, didFailToExtractWith error: NSError)
     func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool))
-}
-
-public protocol MathInkManagerDataSource: class {
-    var selectionPadding: CGFloat { get }
-    var lineWidth: CGFloat { get }
 }
 
 open class MathInkManager: NSObject, MathInkParserDelegate {
     
-    public weak var delegate: MathInkManagerDelegate?
-    public weak var dataSource: MathInkManagerDataSource?
+    public weak var renderer: MathInkRendering?
     
     public private(set) var buffer: UIBezierPath?
     
@@ -57,10 +53,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     private var inkIndex = 0
     private var inkCache = [InkType]()
     
-    private var padding: CGFloat {
-        return dataSource!.lineWidth + dataSource!.selectionPadding
-    }
-    
     open var parser: MathInkParser? {
         didSet { parser?.delegate = self }
     }
@@ -80,16 +72,15 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     private func getPath(from inkArray: [InkType]) -> UIBezierPath {
         return inkArray.reduce(UIBezierPath()) { (path, ink) -> UIBezierPath in
             path.append(ink.path)
-            path.lineWidth = dataSource!.lineWidth
             return path
         }
     }
     
     private func padded(rect: CGRect) -> CGRect {
-        return CGRect(x: rect.origin.x - padding,
-                      y: rect.origin.y - padding,
-                      width: rect.size.width + padding * 2.0,
-                      height: rect.size.height + padding * 2.0
+        return CGRect(x: rect.origin.x - renderer!.nodePadding,
+                      y: rect.origin.y - renderer!.nodePadding,
+                      width: rect.size.width + renderer!.nodePadding * 2.0,
+                      height: rect.size.height + renderer!.nodePadding * 2.0
         )
     }
     
@@ -109,7 +100,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         if buffer == nil {
             buffer = UIBezierPath()
-            buffer!.lineWidth = dataSource!.lineWidth
             buffer!.lineCapStyle = .round
             buffer!.move(to: previousPoint)
         }
@@ -124,7 +114,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             buffer = nil
         }
         
-        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))
         
         return { () -> CGRect in
             let minX = min(point.x, bufferPoint.x)
@@ -139,7 +129,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     public func undo() -> CGRect? {
         guard canUndo else { return nil }
         inkIndex -= 1
-        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))
         process()
         
         return padded(rect: inkCache[inkIndex].frame)
@@ -148,7 +138,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     public func redo() -> CGRect? {
         guard canRedo else { return nil }
         inkIndex += 1
-        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))
         process()
         
         return padded(rect: inkCache[inkIndex - 1].frame)
@@ -157,7 +147,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     public func process() {
         guard let parser = parser else {
             // TODO: Define error
-            delegate?.manager(self, didFailToParseWith: NSError(domain: "tempdomain", code: 0))
+            renderer?.manager(self, didFailToExtractWith: NSError(domain: "tempdomain", code: 0))
             return
         }
         
@@ -216,7 +206,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         add(ink: RemovedInk(indexes: Set(node.indexes), path: getPath(from: ink)))
         
-        delegate?.manager(self, didUpdateHistory: (canUndo, canRedo))
+        renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))
         
         indexOfSelectedNode = nil
         
@@ -246,7 +236,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - MathInkParser delegate
 
-    open func parser(_ parser: MathInkParser, didParseTreeToLaTeX string: NSString, leafNodes: NSArray) {
+    open func parser(_ parser: MathInkParser, didExtractLaTeX string: NSString, leafNodes: NSArray) {
         guard var leafNodes = leafNodes as? [TerminalNodeType] else {
             // TODO: Define error
 //            delegate?.manager(self, didFailToParseWith: <#T##NSError#>)
@@ -274,7 +264,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         }
         
         nodes = leafNodes
-        delegate?.manager(self, didParseTreeToLaTex: String(string))
+        renderer?.manager(self, didExtractLaTeX: String(string))
     }
     
     open func parser(_ parser: MathInkParser, didRemoveStrokeAt indexes: [Int]) {
@@ -282,7 +272,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     }
     
     open func parser(_ parser: MathInkParser, didFailWith error: NSError) {
-        delegate?.manager(self, didFailToParseWith: error)
+        renderer?.manager(self, didFailToExtractWith: error)
     }
     
 }

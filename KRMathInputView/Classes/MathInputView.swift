@@ -21,9 +21,7 @@ import UIKit
     
 }
 
-private typealias ProtocolCollection =
-    MathInkManagerDelegate & MathInkManagerDataSource &
-    KeyboardTypeDelegate & KeyboardTypeDataSource
+private typealias ProtocolCollection = MathInkRendering & KeyboardTypeDelegate & KeyboardTypeDataSource
 
 open class MathInputView: UIView, ProtocolCollection {
     
@@ -54,6 +52,9 @@ open class MathInputView: UIView, ProtocolCollection {
     
     public var lineWidth: CGFloat = 3.0
     public var selectionPadding: CGFloat = 8.0
+    public var nodePadding: CGFloat {
+        return lineWidth + selectionPadding
+    }
     
     public var selectionBGColor = UIColor(hex: 0x00BCD4, alpha: 0.1)
     public var selectionStrokeColor = UIColor(hex: 0x00BCD4)
@@ -106,8 +107,7 @@ open class MathInputView: UIView, ProtocolCollection {
         longPressGestureRecognizer.isEnabled = false
         addGestureRecognizer(longPressGestureRecognizer)
         
-        manager.delegate = self
-        manager.dataSource = self
+        manager.renderer = self
     }
     
     // MARK: - Public
@@ -118,6 +118,7 @@ open class MathInputView: UIView, ProtocolCollection {
         for ink in manager.ink {
             if let strokeInk = ink as? StrokeInk {
                 guard rect.intersects(strokeInk.path.bounds) else { continue }
+                strokeInk.path.lineWidth = lineWidth
                 strokeInk.path.stroke()
             } else {
                 // TODO: Add error handling
@@ -130,7 +131,10 @@ open class MathInputView: UIView, ProtocolCollection {
             }
         }
         
-        if let stroke = manager.buffer { stroke.stroke() }
+        if let stroke = manager.buffer {
+            stroke.lineWidth = lineWidth
+            stroke.stroke()
+        }
     }
     
     // MARK: - Private
@@ -309,13 +313,13 @@ open class MathInputView: UIView, ProtocolCollection {
         }
     }
     
-    // MARK: - MyScriptParser delegate
+    // MARK: - MathInkRendering
     
-    open func manager(_ manager: MathInkManager, didParseTreeToLaTex string: String) {
+    open func manager(_ manager: MathInkManager, didExtractLaTeX string: String) {
         delegate?.mathInputView(self, didParse: manager.ink, latex: string)
     }
     
-    open func manager(_ manager: MathInkManager, didFailToParseWith error: NSError) {
+    open func manager(_ manager: MathInkManager, didFailToExtractWith error: NSError) {
         delegate?.mathInputView(self, didFailToParse: manager.ink, with: error)
     }
     
