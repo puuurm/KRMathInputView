@@ -137,7 +137,7 @@ open class MathInputView: UIView, ProtocolCollection {
         }
     }
     
-    // MARK: - Private
+    // MARK: - Node
     
     @discardableResult
     open func selectNode(at point: CGPoint?) -> Node? {
@@ -225,14 +225,14 @@ open class MathInputView: UIView, ProtocolCollection {
         selectedNodeLayer = imageLayer
     }
     
+    // MARK: - Touch
+    
     private func register(touch: UITouch, isLast: Bool = false) {
         let rect = manager.inputStream(at: touch.location(in: self),
                                        previousPoint: touch.previousLocation(in: self),
                                        isLast: isLast)
         setNeedsDisplay(rect)
     }
-    
-    // MARK: - Touch
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard isWritingMode else { return }
