@@ -18,11 +18,11 @@ public protocol MathInkRendering: class {
 
 open class MathInkManager: NSObject, MathInkParserDelegate {
     
-    public weak var renderer: MathInkRendering?
+    open weak var renderer: MathInkRendering?
     
-    public private(set) var buffer: UIBezierPath?
+    open private(set) var buffer: UIBezierPath?
     
-    public var ink: [Ink] {
+    open var ink: [Ink] {
         var ink = [Ink]()
         var arrIndexSet = [Set<Int>]()
         
@@ -47,8 +47,8 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return ink
     }
     
-    public var canUndo: Bool { return inkIndex > 0  }
-    public var canRedo: Bool { return inkIndex < inkCache.count }
+    open var canUndo: Bool { return inkIndex > 0  }
+    open var canRedo: Bool { return inkIndex < inkCache.count }
     
     private var inkIndex = 0
     private var inkCache = [InkType]()
@@ -57,8 +57,8 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         didSet { parser?.delegate = self }
     }
     
-    public private(set) var nodes = [TerminalNodeType]()
-    public private(set) var indexOfSelectedNode: Int?
+    open private(set) var nodes = [TerminalNodeType]()
+    open private(set) var indexOfSelectedNode: Int?
     
     // MARK: - Ink
     
