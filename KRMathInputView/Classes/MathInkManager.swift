@@ -157,6 +157,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     // MARK: - Node
     
+    @discardableResult
     public func selectNode(at point: CGPoint?) -> Node? {
         guard let point = point else {
             indexOfSelectedNode = nil

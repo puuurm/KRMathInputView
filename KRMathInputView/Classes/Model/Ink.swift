@@ -25,34 +25,7 @@ public struct StrokeInk: Ink {
     public var frame: CGRect { return path.bounds }
     
     public var objCType: NSObject {
-        var arr = NSMutableArray()
-        let points = withUnsafeMutablePointer(to: &arr) { UnsafeMutablePointer<NSMutableArray>($0) }
-        
-        path.cgPath.apply(info: points) { (info, element) in
-            let bezierPoints = info?.assumingMemoryBound(to: NSMutableArray.self).pointee
-            let points = element.pointee.points
-            let type = element.pointee.type
-            switch type {
-            case .moveToPoint:
-                bezierPoints?.add(NSValue(cgPoint: points.pointee))
-                break
-            case .addLineToPoint:
-                bezierPoints?.add(NSValue(cgPoint: points.pointee))
-                break
-            case .addQuadCurveToPoint:
-                bezierPoints?.add(NSValue(cgPoint: points.pointee))
-                bezierPoints?.add(NSValue(cgPoint: points.successor().pointee))
-                break
-            case .addCurveToPoint:
-                bezierPoints?.add(NSValue(cgPoint: points.pointee))
-                bezierPoints?.add(NSValue(cgPoint: points.successor().pointee))
-                bezierPoints?.add(NSValue(cgPoint: points.successor().pointee))
-                break
-            default:
-                break
-            }
-        }
-        return NSArray(array: points.pointee)
+        return NSArray(array: path.points.map { NSValue(cgPoint: $0) })
     }
     
     public init(path: UIBezierPath) {
