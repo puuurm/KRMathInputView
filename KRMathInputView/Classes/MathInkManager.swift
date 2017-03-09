@@ -112,6 +112,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             buffer!.addQuadCurve(to: point, controlPoint: previousPoint)
             add(ink: StrokeInk(path: buffer!))
             buffer = nil
+            process()
         }
         
         renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))

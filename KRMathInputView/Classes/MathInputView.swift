@@ -247,13 +247,11 @@ open class MathInputView: UIView, ProtocolCollection {
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard isWritingMode else { return }
         register(touch: touches.first!, isLast: true)
-        manager.process()
     }
     
     override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard isWritingMode else { return }
         register(touch: touches.first!, isLast: true)
-        manager.process()
     }
     
     // MARK: - Target action
