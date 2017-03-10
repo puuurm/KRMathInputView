@@ -9,12 +9,32 @@
 import XCTest
 import KRMathInputView
 
+class TestParser: MathInkParser {
+    var delegate: MathInkParserDelegate?
+    
+    func addInk(_ strokes: NSArray) {}
+    func parse() {}
+}
+
+class TestRenderer: MathInkRendering {
+    var nodePadding: CGFloat = 8.0
+    
+    func manager(_ manager: MathInkManager, didExtractLaTeX string: String) {}
+    func manager(_ manager: MathInkManager, didFailToExtractWith error: NSError) {}
+    func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool)) {}
+}
+
 class MathInkManagerTests: XCTestCase {
     let manager = MathInkManager()
+    let parser = TestParser()
+    let renderer = TestRenderer()
     
     override func setUp() {
         super.setUp()
 
+        manager.renderer = renderer
+        parser.delegate = manager
+        
         let path1 = UIBezierPath()
         path1.move(to: CGPoint.zero)
         path1.addLine(to: CGPoint(x: 100.0, y: 100.0))
@@ -32,20 +52,24 @@ class MathInkManagerTests: XCTestCase {
         path4.addLine(to: CGPoint(x: 100.0, y: 300.0))
         
         let ink = [path1, path2, path3, path4].map { StrokeInk(path: $0) }
+        manager.load(ink: ink)
         
         var nodes = [CharacterNode]()
-        
         
         for i in 0 ..< ink.count {
             nodes.append(CharacterNode(indexes: [i], candidates: ["1"]))
         }
         
-        manager.test(with: ink, nodes: nodes)
+        parser.delegate?.parser(parser, didExtractLaTeX: "", leafNodes: NSArray(array: nodes))
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+    }
+    
+    func testInkManagerLoadInk() {
+        
     }
     
     func testInkManagerSelectNodeAtPoint() {
@@ -58,7 +82,7 @@ class MathInkManagerTests: XCTestCase {
         ]
         
         for i in 0 ..< testPoints.count {
-            let selectedNode = manager.testSelectNode(at: testPoints[i])
+            let selectedNode = manager.selectNode(at: testPoints[i])
         
             switch i {
             case 4:
@@ -83,7 +107,7 @@ class MathInkManagerTests: XCTestCase {
         let testPoint = CGPoint(x: 50.0, y: 50.0)
         
         for i in 0 ..< 10 {
-            let selectedNode = manager.testSelectNode(at: testPoint)
+            let selectedNode = manager.selectNode(at: testPoint)
             XCTAssertNotNil(selectedNode, "A node should be selected for \(testPoint).")
             XCTAssertNotNil(manager.indexOfSelectedNode, "`indexOfSelectedNode` should not be `nil`.")
             XCTAssertEqual(i % 3, manager.indexOfSelectedNode!, "A wrong index is selected.")

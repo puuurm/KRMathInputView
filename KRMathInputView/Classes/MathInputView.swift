@@ -325,4 +325,8 @@ open class MathInputView: UIView, ProtocolCollection {
         
     }
     
+    open func manager(_ manager: MathInkManager, didLoad ink: [InkType]) {
+        setNeedsDisplay()
+    }
+    
 }

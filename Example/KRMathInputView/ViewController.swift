@@ -20,6 +20,7 @@ class MyScriptView: MathInputView {
 }
 
 class ViewController: UIViewController, MathInputViewDelegate {
+    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var mathInputView: MyScriptView!
     
@@ -55,6 +56,22 @@ class ViewController: UIViewController, MathInputViewDelegate {
     }
     
     public func mathInputView(_ mathInputView: MathInputView, didChangeModeTo isWritingMode: Bool) {
+        
+    }
+    
+    public func mathInputView(_ mathInputView: MathInputView, didTap node: ObjCNode?) {
+        
+    }
+    
+    public func mathInputView(_ mathInputView: MathInputView, didReplace oldNode: ObjCNode, with newNode: ObjCNode) {
+        
+    }
+    
+    public func mathInputView(_ mathInputView: MathInputView, didRemove node: ObjCNode) {
+        
+    }
+    
+    public func mathInputView(_ mathInputView: MathInputView, didLongPress node: ObjCNode?) {
         
     }
     

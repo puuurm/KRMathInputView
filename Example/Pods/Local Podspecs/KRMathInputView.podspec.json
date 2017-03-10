@@ -1,6 +1,6 @@
 {
   "name": "KRMathInputView",
-  "version": "0.2.0",
+  "version": "0.3.2",
   "summary": "A generic input view for math handwriting.",
   "description": "`KRMathInputView` receives handwriting input and saves data as paths.\nBy separating the parser that analyzes input data, `KRMathInputView` can be easily adopted into an existing project.",
   "homepage": "https://github.com/BridgeTheGap/KRMathInputView",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/BridgeTheGap/KRMathInputView.git",
-    "tag": "0.2.0"
+    "tag": "0.3.2"
   },
   "platforms": {
     "ios": "8.0"
