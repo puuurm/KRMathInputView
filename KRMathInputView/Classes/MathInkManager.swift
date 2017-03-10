@@ -91,7 +91,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         )
     }
     
-    public func add(ink: InkType) {
+    open func add(ink: InkType) {
         if inkIndex < inkCache.count { inkCache.removeSubrange(inkIndex ..< inkCache.count) }
         
         inkCache.append(ink)
@@ -105,7 +105,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     }
     
     @discardableResult
-    public func inputStream(at point: CGPoint, previousPoint: CGPoint, isLast: Bool = false) -> CGRect {
+    open func inputStream(at point: CGPoint, previousPoint: CGPoint, isLast: Bool = false) -> CGRect {
         func midPoint() -> CGPoint {
             return CGPoint(x: (point.x + previousPoint.x) * 0.5,
                            y: (point.y + previousPoint.y) * 0.5)
@@ -140,7 +140,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         }()
     }
     
-    public func undo() -> CGRect? {
+    open func undo() -> CGRect? {
         guard canUndo else { return nil }
         inkIndex -= 1
         renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))
@@ -149,7 +149,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return padded(rect: inkCache[inkIndex].frame)
     }
     
-    public func redo() -> CGRect? {
+    open func redo() -> CGRect? {
         guard canRedo else { return nil }
         inkIndex += 1
         renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))
@@ -158,7 +158,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return padded(rect: inkCache[inkIndex - 1].frame)
     }
     
-    public func process() {
+    open func process() {
         guard let parser = parser else {
             // TODO: Define error
             renderer?.manager(self, didFailToExtractWith: NSError(domain: "tempdomain", code: 0))
@@ -172,7 +172,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     // MARK: - Node
     
     @discardableResult
-    public func selectNode(at point: CGPoint?) -> Node? {
+    open func selectNode(at point: CGPoint?) -> Node? {
         guard let point = point else {
             indexOfSelectedNode = nil
             return nil
@@ -213,7 +213,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return Node(ink: nodeInks[index], frame: nodeFrames[index], candidates: nodes[index].candidates)
     }
     
-    public func removeSelectedNode() -> Node? {
+    open func removeSelectedNode() -> Node? {
         guard indexOfSelectedNode != nil else { return nil }
         
         let node = nodes[indexOfSelectedNode!]
@@ -230,7 +230,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates)
     }
     
-    public func replaceSelectedNode(with character: Character) -> (Node, Node)? {
+    open func replaceSelectedNode(with character: Character) -> (Node, Node)? {
         guard indexOfSelectedNode != nil else { return nil }
 
         let node = nodes[indexOfSelectedNode!]
