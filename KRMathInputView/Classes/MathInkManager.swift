@@ -29,10 +29,16 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         for inkInstance in Array(inkCache.dropLast(inkCache.count - inkIndex)) {
             if let inkInstance = inkInstance as? Ink {
-                ink.append(inkInstance)
-                
-                if let rInk = inkInstance as? CharacterInk {
-                    arrIndexSet.append(rInk.replacedIndexes)
+                if var rInk = inkInstance as? CharacterInk {
+                    ink.append(CharacterInk(character: rInk.character,
+                                            path: rInk.path,
+                                            replacedIndexes: Set<Int>()))
+                    
+                    if rInk.replacedIndexes.count > 0 {
+                        arrIndexSet.append(rInk.replacedIndexes)
+                    }
+                } else {
+                    ink.append(inkInstance)
                 }
             } else {
                 arrIndexSet.append((inkInstance as! RemovedInk).indexes)
