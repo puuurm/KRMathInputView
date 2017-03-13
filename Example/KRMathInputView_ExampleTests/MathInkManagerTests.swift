@@ -22,6 +22,7 @@ class TestRenderer: MathInkRendering {
     func manager(_ manager: MathInkManager, didExtractLaTeX string: String) {}
     func manager(_ manager: MathInkManager, didFailToExtractWith error: NSError) {}
     func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool)) {}
+    func manager(_ manager: MathInkManager, didLoad ink: [InkType]) {}
 }
 
 class MathInkManagerTests: XCTestCase {
