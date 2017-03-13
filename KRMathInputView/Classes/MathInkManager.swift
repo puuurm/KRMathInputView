@@ -96,11 +96,16 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         inkCache.append(ink)
         inkIndex += 1
+        
+        process()
     }
     
     open func load(ink: [InkType]) {
         inkCache = ink
         inkIndex = inkCache.count
+        
+        process()
+        
         renderer!.manager(self, didLoad: ink)
     }
     
@@ -125,7 +130,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
             buffer!.addQuadCurve(to: point, controlPoint: previousPoint)
             add(ink: StrokeInk(path: buffer!))
             buffer = nil
-            process()
         }
         
         renderer?.manager(self, didUpdateHistory: (canUndo, canRedo))
@@ -225,7 +229,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         indexOfSelectedNode = nil
         
-        process()
         
         return Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates)
     }
@@ -242,8 +245,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         add(ink: charInk)
 
         indexOfSelectedNode = nil
-        
-        process()
         
         return (Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates),
                 Node(ink: [charInk], frame: padded(rect: frame), candidates: [String(character)]))
@@ -287,6 +288,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     }
     
     open func parser(_ parser: MathInkParser, didFailWith error: NSError) {
+        nodes.removeAll()
         renderer?.manager(self, didFailToExtractWith: error)
     }
     
