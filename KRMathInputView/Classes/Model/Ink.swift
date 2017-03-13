@@ -13,13 +13,21 @@ public protocol InkType {
     var frame: CGRect { get }
 }
 
+public protocol CharacterInkType: InkType {
+    var character: Character { get }
+}
+
+public protocol RemovingInkType: InkType {
+    var indexes: Set<Int> { get }
+}
+
 public protocol ObjCConvertible {
     var objCType: NSObject { get }
 }
 
-public typealias Ink = InkType & ObjCConvertible
+public typealias ObjCInk = InkType & ObjCConvertible
 
-public struct StrokeInk: Ink {
+public struct StrokeInk: ObjCInk {
 
     public let path: UIBezierPath
     public var frame: CGRect { return path.bounds }
@@ -35,6 +43,7 @@ public struct StrokeInk: Ink {
 }
 
 @objc public class CharacterInkValue: NSObject {
+    
     public let character: NSString
     public let frame: NSValue
     
@@ -50,7 +59,7 @@ public struct StrokeInk: Ink {
     
 }
 
-public struct CharacterInk: Ink {
+public struct CharacterInk: ObjCInk, CharacterInkType, RemovingInkType {
     
     public let character: Character
     public let path: UIBezierPath
@@ -60,13 +69,15 @@ public struct CharacterInk: Ink {
         return CharacterInkValue(character: character, frame: frame)
     }
     
-    internal let replacedIndexes: Set<Int>
+    public let indexes: Set<Int>
     
 }
 
-internal struct RemovedInk: InkType {
+internal struct RemovedInk: RemovingInkType {
+    
     internal let indexes: Set<Int>
     internal let path: UIBezierPath
     var frame: CGRect { return path.bounds }
+    
 }
 

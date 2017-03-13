@@ -23,25 +23,23 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     
     open private(set) var buffer: UIBezierPath?
     
-    open var ink: [Ink] {
-        var ink = [Ink]()
+    open var ink: [ObjCInk] {
+        var ink = [ObjCInk]()
         var arrIndexSet = [Set<Int>]()
         
         for inkInstance in Array(inkCache.dropLast(inkCache.count - inkIndex)) {
-            if let inkInstance = inkInstance as? Ink {
-                if var rInk = inkInstance as? CharacterInk {
-                    ink.append(CharacterInk(character: rInk.character,
-                                            path: rInk.path,
-                                            replacedIndexes: Set<Int>()))
-                    
-                    if rInk.replacedIndexes.count > 0 {
-                        arrIndexSet.append(rInk.replacedIndexes)
-                    }
+            if let inkInstance = inkInstance as? ObjCInk {
+                if let cInk = inkInstance as? CharacterInkType {
+                    ink.append(CharacterInk(character: cInk.character,
+                                            path: cInk.path,
+                                            indexes: Set<Int>()))
                 } else {
                     ink.append(inkInstance)
                 }
-            } else {
-                arrIndexSet.append((inkInstance as! RemovedInk).indexes)
+            }
+            
+            if let removingInk = inkInstance as? RemovingInkType {
+                arrIndexSet.append(removingInk.indexes)
             }
         }
         
@@ -241,7 +239,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         let charInk = CharacterInk(character: character,
                                    path: getPath(from: arrInk),
-                                   replacedIndexes: Set(node.indexes))
+                                   indexes: Set(node.indexes))
         add(ink: charInk)
 
         indexOfSelectedNode = nil
