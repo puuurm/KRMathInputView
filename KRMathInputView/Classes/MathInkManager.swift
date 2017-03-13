@@ -103,6 +103,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     open func load(ink: [InkType]) {
         inkCache = ink
         inkIndex = inkCache.count
+        indexOfSelectedNode = nil
         
         process()
         
