@@ -119,6 +119,7 @@ open class MathInputView: UIView, ProtocolCollection {
             if let strokeInk = ink as? StrokeInk {
                 guard rect.intersects(strokeInk.path.bounds) else { continue }
                 strokeInk.path.lineWidth = lineWidth
+                strokeInk.path.lineCapStyle = .round
                 strokeInk.path.stroke()
             } else {
                 // TODO: Add error handling
@@ -133,6 +134,7 @@ open class MathInputView: UIView, ProtocolCollection {
         
         if let stroke = manager.buffer {
             stroke.lineWidth = lineWidth
+            stroke.lineCapStyle = .round
             stroke.stroke()
         }
     }

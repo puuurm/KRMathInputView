@@ -118,7 +118,6 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         
         if buffer == nil {
             buffer = UIBezierPath()
-            buffer!.lineCapStyle = .round
             buffer!.move(to: previousPoint)
         }
         
