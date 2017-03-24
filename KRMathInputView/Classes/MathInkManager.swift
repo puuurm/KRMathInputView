@@ -15,6 +15,7 @@ public protocol MathInkRendering: class {
     func manager(_ manager: MathInkManager, didFailToExtractWith error: NSError)
     func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool))
     func manager(_ manager: MathInkManager, didLoad ink: [InkType])
+    func manager(_ manager: MathInkManager, didScratchOut frame: CGRect)
 }
 
 open class MathInkManager: NSObject, MathInkParserDelegate {
@@ -281,9 +282,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         renderer?.manager(self, didExtractLaTeX: String(string))
     }
     
-    open func parser(_ parser: MathInkParser, didRemoveStrokeAt indexes: [Int]) {
-        // TODO: Implement
-    }
+    open func parser(_ parser: MathInkParser, didScratchOut indexes: [Int]) { }
     
     open func parser(_ parser: MathInkParser, didFailWith error: NSError) {
         nodes.removeAll()

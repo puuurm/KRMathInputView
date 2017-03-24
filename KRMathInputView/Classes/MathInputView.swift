@@ -327,6 +327,10 @@ open class MathInputView: UIView, ProtocolCollection {
         
     }
     
+    open func manager(_ manager: MathInkManager, didScratchOut frame: CGRect) {
+        
+    }
+    
     open func manager(_ manager: MathInkManager, didLoad ink: [InkType]) {
         selectedNodeLayer?.removeFromSuperlayer()
         candidatesView?.hideKeyboard(nil)

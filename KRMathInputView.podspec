@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'KRMathInputView'
-  s.version          = '0.3.4'
+  s.version          = '0.3.5'
   s.summary          = 'A generic input view for math handwriting.'
 
   s.description      = <<-DESC
