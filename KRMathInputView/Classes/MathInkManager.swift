@@ -14,7 +14,7 @@ public protocol MathInkRendering: class {
     func manager(_ manager: MathInkManager, didExtractLaTeX string: String)
     func manager(_ manager: MathInkManager, didFailToExtractWith error: NSError)
     func manager(_ manager: MathInkManager, didUpdateHistory state: (undo: Bool, redo: Bool))
-    func manager(_ manager: MathInkManager, didLoad ink: [InkType])
+    func manager(_ manager: MathInkManager, didLoad ink: [InkType]?)
     func manager(_ manager: MathInkManager, didScratchOut frame: CGRect)
 }
 
@@ -99,12 +99,12 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         process()
     }
     
-    open func load(ink: [InkType]) {
-        inkCache = ink
+    open func load(ink: [InkType]?) {
+        inkCache = ink ?? [InkType]()
         inkIndex = inkCache.count
         indexOfSelectedNode = nil
         
-        process()
+        if ink != nil { process() }
         
         renderer!.manager(self, didLoad: ink)
     }
