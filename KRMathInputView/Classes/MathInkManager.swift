@@ -66,6 +66,17 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
     open private(set) var nodes = [TerminalNodeType]()
     open private(set) var indexOfSelectedNode: Int?
     
+    public var selectedNode: Node? {
+        guard indexOfSelectedNode != nil else { return nil }
+        
+        let node = nodes[indexOfSelectedNode!]
+        let (ink, frame) = getInk(for: node.indexes)
+        
+        return Node(ink: ink,
+                    frame: padded(rect: frame),
+                    candidates: node.candidates)
+    }
+    
     // MARK: - Ink
     
     private func getInk(for indexes: [Int]) -> (arrInk: [InkType], frame: CGRect)  {
