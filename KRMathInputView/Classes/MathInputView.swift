@@ -177,17 +177,9 @@ open class MathInputView: UIView, ProtocolCollection {
         return image
     }
     
-    // TODO: Add error handling
-    @discardableResult
-    open func display(node: Node?) {
-        selectedNodeLayer?.removeFromSuperlayer()
-        candidatesView?.hideKeyboard(nil)
-        
-        guard let node = node else { return }
-        
-        // Draw image of strokes and the bounding box
+    open func image(for node: Node) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(node.frame.size, false, 0.0)
-        guard let ctx = UIGraphicsGetCurrentContext() else { return }
+        guard let ctx = UIGraphicsGetCurrentContext() else { return nil }
         ctx.saveGState()
         
         ctx.setFillColor(selectionBGColor.cgColor)
@@ -203,7 +195,9 @@ open class MathInputView: UIView, ProtocolCollection {
                 ctx.addPath(strokeInk.path.cgPath)
             } else {
                 let charInk = ink as! CharacterInk
-                guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else { return }
+                guard let image = getImage(for: charInk, strokeColor: selectionStrokeColor)?.cgImage else {
+                    return nil
+                }
                 ctx.draw(image, in: charInk.frame)
             }
         }
@@ -211,16 +205,29 @@ open class MathInputView: UIView, ProtocolCollection {
         ctx.strokePath()
         
         ctx.restoreGState()
-        let image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
+
+        return image
+    }
+    
+    // TODO: Add error handling
+    
+    open func display(node: Node?) {
+        selectedNodeLayer?.removeFromSuperlayer()
+        candidatesView?.hideKeyboard(nil)
+        
+        guard let node = node else { return }
+        
+        // Draw image of strokes and the bounding box
         
         // Set as layer content and assign `selectedNodeLayer`
-        guard image != nil else { return }
+        guard let image = image(for: node) else { return }
         
         let imageLayer = CALayer()
         imageLayer.frame = node.frame
-        imageLayer.contents = image
+        imageLayer.contents = image.cgImage
         
         // Add as sublayer
         layer.addSublayer(imageLayer)
