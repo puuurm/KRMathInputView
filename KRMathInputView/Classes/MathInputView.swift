@@ -62,7 +62,7 @@ open class MathInputView: UIView, ProtocolCollection {
     
     public var selectedNodeCandidates: [String]? {
         guard let index = manager.indexOfSelectedNode else { return nil }
-        return manager.nodes[index].candidates
+        return manager.nodes[index].candidates.filter { $0.characters.count == 1 }
     }
     
     open weak var candidatesView: KeyboardType? {
