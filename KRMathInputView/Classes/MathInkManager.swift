@@ -18,7 +18,7 @@ public protocol MathInkRendering: class {
     func manager(_ manager: MathInkManager, didScratchOut frame: CGRect)
 }
 
-open class MathInkManager: NSObject, MathInkParserDelegate {
+@objc open class MathInkManager: NSObject, MathInkParserDelegate {
     
     open weak var renderer: MathInkRendering?
     

@@ -8,10 +8,16 @@
 
 import UIKit
 
-public struct Node {
+@objc public class Node: NSObject {
     public let ink: [InkType]
     public let frame: CGRect
     public let candidates: [String]
+    
+    init(ink: [InkType], frame: CGRect, candidates: [String]) {
+        self.ink = ink
+        self.frame = frame
+        self.candidates = candidates
+    }
 }
 
 @objc open class ObjCNode: NSObject {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol TerminalNodeType {
+@objc public protocol TerminalNodeType {
     var indexes: [Int] { get }
     var candidates: [String] { get }
 }
