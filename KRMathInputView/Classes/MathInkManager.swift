@@ -243,7 +243,7 @@ open class MathInkManager: NSObject, MathInkParserDelegate {
         return Node(ink: arrInk, frame: padded(rect: frame), candidates: node.candidates)
     }
     
-    open func replaceSelectedNode(with character: Character) -> (Node, Node)? {
+    open func replaceSelectedNode(with character: String) -> (Node, Node)? {
         guard indexOfSelectedNode != nil else { return nil }
 
         let node = nodes[indexOfSelectedNode!]

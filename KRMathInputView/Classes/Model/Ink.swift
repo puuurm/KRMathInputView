@@ -8,26 +8,26 @@
 
 import UIKit
 
-public protocol InkType {
+@objc public protocol InkType {
     var path: UIBezierPath { get }
     var frame: CGRect { get }
 }
 
-public protocol CharacterInkType: InkType {
-    var character: Character { get }
+@objc public protocol CharacterInkType: InkType {
+    var character: String { get }
 }
 
-public protocol RemovingInkType: InkType {
+@objc public protocol RemovingInkType: InkType {
     var indexes: Set<Int> { get }
 }
 
-public protocol ObjCConvertible {
+@objc public protocol ObjCConvertible {
     var objCType: NSObject { get }
 }
 
 public typealias ObjCInk = InkType & ObjCConvertible
 
-public struct StrokeInk: ObjCInk {
+@objc public class StrokeInk: NSObject, ObjCInk {
 
     public let path: UIBezierPath
     public var frame: CGRect { return path.bounds }
@@ -47,21 +47,21 @@ public struct StrokeInk: ObjCInk {
     public let character: NSString
     public let frame: NSValue
     
-    init(character: Character, frame: CGRect) {
-        self.character = NSString(string: String(character))
+    init(character: String, frame: CGRect) {
+        self.character = NSString(string: character)
         self.frame = NSValue(cgRect: frame)
     }
     
-    init(character: NSString, frame: NSValue) {
-        self.character = character
+    init(string: NSString, frame: NSValue) {
+        self.character = string
         self.frame = frame
     }
     
 }
 
-public struct CharacterInk: ObjCInk, CharacterInkType, RemovingInkType {
+@objc public class CharacterInk: NSObject, ObjCInk, CharacterInkType, RemovingInkType {
     
-    public let character: Character
+    public let character: String
     public let path: UIBezierPath
     public var frame: CGRect { return path.bounds }
     
@@ -71,13 +71,24 @@ public struct CharacterInk: ObjCInk, CharacterInkType, RemovingInkType {
     
     public let indexes: Set<Int>
     
+    init(character: String, path: UIBezierPath, indexes: Set<Int>) {
+        self.character = character
+        self.path = path
+        self.indexes = indexes
+    }
+    
 }
 
-internal struct RemovedInk: RemovingInkType {
+internal class RemovedInk: NSObject, RemovingInkType {
     
     internal let indexes: Set<Int>
     internal let path: UIBezierPath
     var frame: CGRect { return path.bounds }
+ 
+    init(indexes: Set<Int>, path: UIBezierPath) {
+        self.indexes = indexes
+        self.path = path
+    }
     
 }
 

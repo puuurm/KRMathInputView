@@ -301,7 +301,7 @@ open class MathInputView: UIView, ProtocolCollection {
         delegate?.mathInputView(self, didRemove: ObjCNode(node: node)!)
     }
     
-    open func replaceSelection(with character: Character) {
+    open func replaceSelection(with character: String) {
         guard let node = manager.replaceSelectedNode(with: character) else { return }
         
         display(node: nil)
@@ -314,7 +314,7 @@ open class MathInputView: UIView, ProtocolCollection {
     open func keyboard(_ keyboard: KeyboardType, didReceive input: String?) {
         if let input = input {
             guard input.characters.count == 1 else { return }
-            replaceSelection(with: Character(input))
+            replaceSelection(with: input)
         } else {
             removeSelection()
         }
