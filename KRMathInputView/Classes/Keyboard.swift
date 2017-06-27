@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol KeyboardType: NSObjectProtocol {
+@objc public protocol KeyboardType: NSObjectProtocol {
     
     weak var delegate: KeyboardTypeDelegate? { get set }
     weak var dataSource: KeyboardTypeDataSource? { get set }
@@ -19,13 +19,13 @@ public protocol KeyboardType: NSObjectProtocol {
     
 }
 
-public protocol KeyboardTypeDataSource: class {
+@objc public protocol KeyboardTypeDataSource: class {
     
     var selectedNodeCandidates: [String]? { get }
     
 }
 
-public protocol KeyboardTypeDelegate: class {
+@objc public protocol KeyboardTypeDelegate: class {
     
     func keyboard(_ keyboard: KeyboardType, didReceive input: String?)
     
