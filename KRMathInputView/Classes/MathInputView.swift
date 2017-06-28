@@ -142,6 +142,11 @@ open class MathInputView: UIView, ProtocolCollection {
     // MARK: - Node
     
     @discardableResult
+    open func selectNode(at point: NSValue?) -> Node? {
+        return selectNode(at: point?.cgPointValue)
+    }
+    
+    @discardableResult
     open func selectNode(at point: CGPoint?) -> Node? {
         let node = manager.selectNode(at: point)
         display(node: node)
