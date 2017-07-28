@@ -83,7 +83,7 @@ public protocol MathInkRendering: class {
         var arrInk = [InkType]()
         for i in indexes { arrInk.append(ink[i]) }
         
-        return (arrInk, arrInk.reduce(arrInk.first!.frame) { $0.1.frame.union($0.0) })
+        return (arrInk, arrInk.reduce(arrInk.first!.frame) { $1.frame.union($0) })
     }
     
     private func getPath(from inkArray: [InkType]) -> UIBezierPath {

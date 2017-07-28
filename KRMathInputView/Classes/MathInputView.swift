@@ -159,8 +159,8 @@ open class MathInputView: UIView, ProtocolCollection {
         let font = (fontName != nil ?
             UIFont(name: fontName!, size: size) :
             UIFont.systemFont(ofSize: size)) ?? UIFont.systemFont(ofSize: size)
-        let attrib = [NSFontAttributeName: font,
-                      NSForegroundColorAttributeName: strokeColor] as [String: Any]
+        let attrib = [NSAttributedStringKey.font: font,
+                      NSAttributedStringKey.foregroundColor: strokeColor]
         let attribString = NSAttributedString(string: String(charInk.character),
                                               attributes: attrib)
         
@@ -351,3 +351,4 @@ open class MathInputView: UIView, ProtocolCollection {
     }
     
 }
+
