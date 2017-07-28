@@ -14,8 +14,8 @@ public extension UIBezierPath {
         
         withUnsafeMutablePointer(to: &points) { pointer in
             cgPath.apply(info: pointer) {
-                let element = $0.1.pointee
-                let ptrPoints = $0.0!.assumingMemoryBound(to: [CGPoint].self)
+                let element = $1.pointee
+                let ptrPoints = $0!.assumingMemoryBound(to: [CGPoint].self)
                 
                 switch element.type {
                     
