@@ -27,7 +27,7 @@ import UIKit
 
 public typealias ObjCInk = InkType & ObjCConvertible
 
-@objc public class StrokeInk: NSObject, ObjCInk {
+public class StrokeInk: NSObject, ObjCInk {
 
     public let path: UIBezierPath
     public var frame: CGRect { return path.bounds }
@@ -44,8 +44,8 @@ public typealias ObjCInk = InkType & ObjCConvertible
 
 @objc public class CharacterInkValue: NSObject {
     
-    public let character: NSString
-    public let frame: NSValue
+    @objc public let character: NSString
+    @objc public let frame: NSValue
     
     init(character: String, frame: CGRect) {
         self.character = NSString(string: character)
@@ -59,7 +59,7 @@ public typealias ObjCInk = InkType & ObjCConvertible
     
 }
 
-@objc public class CharacterInk: NSObject, ObjCInk, CharacterInkType, RemovingInkType {
+public class CharacterInk: NSObject, ObjCInk, CharacterInkType, RemovingInkType {
     
     public let character: String
     public let path: UIBezierPath

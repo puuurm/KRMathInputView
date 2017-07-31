@@ -13,7 +13,7 @@ import UIKit
     var candidates: [String] { get }
 }
 
-@objc public class InkNode: NSObject, TerminalNodeType {
+public class InkNode: NSObject, TerminalNodeType {
     public let indexes: [Int]
     public let candidates: [String]
     
@@ -21,12 +21,12 @@ import UIKit
         return "<InkNode: stroke indexes=\(indexes); candidates=\(candidates)>"
     }
     
-    public init(indexes: [Int], candidates: [String]) {
+    @objc public init(indexes: [Int], candidates: [String]) {
         (self.indexes, self.candidates) = (indexes, candidates)
     }
 }
 
-@objc public class CharacterNode: NSObject, TerminalNodeType {
+public class CharacterNode: NSObject, TerminalNodeType {
     public let indexes: [Int]
     public let candidates: [String]
     
@@ -34,7 +34,7 @@ import UIKit
         return "<CharacterNode: index=\(indexes); character=\(candidates)>"
     }
     
-    public init(indexes: [Int], candidates: [String]) {
+    @objc public init(indexes: [Int], candidates: [String]) {
         (self.indexes, self.candidates) = (indexes, candidates)
     }
 }

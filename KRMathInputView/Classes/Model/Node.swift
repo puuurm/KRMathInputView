@@ -9,11 +9,11 @@
 import UIKit
 
 @objc public class Node: NSObject {
-    public let ink: [InkType]
-    public let frame: CGRect
-    public let candidates: [String]
+    @objc public let ink: [InkType]
+    @objc public let frame: CGRect
+    @objc public let candidates: [String]
     
-    init(ink: [InkType], frame: CGRect, candidates: [String]) {
+    @objc init(ink: [InkType], frame: CGRect, candidates: [String]) {
         self.ink = ink
         self.frame = frame
         self.candidates = candidates
@@ -21,15 +21,15 @@ import UIKit
 }
 
 @objc open class ObjCNode: NSObject {
-    open var frame: CGRect
-    open var candidates: [String]
+    @objc open var frame: CGRect
+    @objc open var candidates: [String]
     
-    public init(frame: CGRect, candidates: [String]) {
+    @objc public init(frame: CGRect, candidates: [String]) {
         self.frame = frame
         self.candidates = candidates
     }
     
-    public convenience init?(node: Node?) {
+    @objc public convenience init?(node: Node?) {
         guard let node = node else { return nil }
         self.init(frame: node.frame, candidates: node.candidates)
     }
