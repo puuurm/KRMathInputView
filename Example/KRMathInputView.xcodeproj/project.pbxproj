@@ -167,8 +167,6 @@
 				0366485D1E4C024E009BDE27 /* Sources */,
 				0366485E1E4C024E009BDE27 /* Frameworks */,
 				0366485F1E4C024E009BDE27 /* Resources */,
-				68B14C2B6A7DCADA23D591F8 /* [CP] Embed Pods Frameworks */,
-				93CCDD6AA741D95FA5861977 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -189,7 +187,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				BB7028BFCB838DE7E809F763 /* [CP] Embed Pods Frameworks */,
-				43E0E527580D9C8A099B9912 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -219,7 +216,7 @@
 					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = GQW6373J2T;
+						DevelopmentTeam = 8HCBQJDHQ6;
 						LastSwiftMigration = 0900;
 					};
 				};
@@ -282,21 +279,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		43E0E527580D9C8A099B9912 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KRMathInputView_Example/Pods-KRMathInputView_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4ED09745A3F57C07E3670FF1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,36 +295,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		68B14C2B6A7DCADA23D591F8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KRMathInputView_ExampleTests/Pods-KRMathInputView_ExampleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93CCDD6AA741D95FA5861977 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KRMathInputView_ExampleTests/Pods-KRMathInputView_ExampleTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB7028BFCB838DE7E809F763 /* [CP] Embed Pods Frameworks */ = {
@@ -565,7 +517,7 @@
 			baseConfigurationReference = 8CE8C40FDB4AC6E0F8771B51 /* Pods-KRMathInputView_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = GQW6373J2T;
+				DEVELOPMENT_TEAM = 8HCBQJDHQ6;
 				INFOPLIST_FILE = KRMathInputView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -582,7 +534,7 @@
 			baseConfigurationReference = EA269EDE64767B18FD8222DA /* Pods-KRMathInputView_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = GQW6373J2T;
+				DEVELOPMENT_TEAM = 8HCBQJDHQ6;
 				INFOPLIST_FILE = KRMathInputView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;

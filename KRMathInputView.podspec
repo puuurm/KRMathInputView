@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'KRMathInputView'
-  s.version          = '0.5.1.2'
+  s.version          = '0.5.1.3'
   s.summary          = 'A generic input view for math handwriting.'
 
   s.description      = <<-DESC
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'KRMathInputView/Classes/**/*'
-  
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
   # s.resource_bundles = {
   #   'KRMathInputView' => ['KRMathInputView/Assets/*.png']
   # }

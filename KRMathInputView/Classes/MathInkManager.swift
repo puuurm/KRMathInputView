@@ -276,7 +276,7 @@ public protocol MathInkRendering: class {
                 allIndexes[index] = nil
             }
         }
-        let undefinedIndexes = allIndexes.flatMap { $0 }
+        let undefinedIndexes = allIndexes.compactMap { $0 }
         
         if !undefinedIndexes.isEmpty {
             let sqrtThresh: CGFloat = 22.0
